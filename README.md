@@ -1,2 +1,3 @@
 # nemo
-Repositório para reunir programas de cálculo e projeto do hidrofólio "Nemo"
+
+Repositório para reunir arquivos de cálculo e projeto do hidrofólio "Nemo"
