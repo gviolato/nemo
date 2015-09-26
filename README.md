@@ -1,3 +1,4 @@
 # nemo
 
-Repositório para reunir arquivos de cálculo e projeto do hidrofólio "Nemo"
+Place to gather calculation and design files for the HPH project "Nemo"
+
