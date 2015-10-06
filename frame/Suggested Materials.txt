@@ -1,0 +1,9 @@
+#Benchmark on what we should use for the frame material.
+
+Taken from random material online:
+Aluminum alloy 2024-T4
+Young’s Modulus: 10.6 x 106 psi
+Yield Strength: 47,000 psi 
+Poisson ratio : 0.33
+
+
