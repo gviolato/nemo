@@ -3,7 +3,7 @@
 // Based on article "The 20-knot human-powered water craft" - Alec Brooks
 // "Human Power" Magazine, Spring 1987, Vol6 N.1 - p.1
 //
-// Diego Montero; Gustavo Violato
+// Diego Montero; Gustavo Violato; Fernando Valentini
 // First release: Sep. 2015
 
 clc
@@ -23,16 +23,20 @@ gustavo.mass = 85;
 gustavo.pwr  = 300;
 gustavo.name = "Gustavo";
 
-diego.mass = 70;
+fernando.mass = 88;
+fernando.pwr  = 300;
+fernando.name = "Valentini";
+
+diego.mass = 72;
 diego.pwr = 275;
 diego.name = "Diego";
 
 // Chosen wing dimensions
-prj_span = 1.95;    // [m]
+prj_span = 1.80;    // [m]
 prj_aspect = 18;    // [m]
 
 // Rider
-rider = gustavo;
+rider = fernando;
 
 // User defined variables
 rho_w    = 1000;    // density of water 16C        [kg/m^3]
