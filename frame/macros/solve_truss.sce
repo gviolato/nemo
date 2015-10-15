@@ -1,11 +1,16 @@
+function [Results,Udef]=solve_truss(conec, coord, Prop, F)
+    
+//Main program, solves a 2D or 3D truss with beam elements.
+//Even though there is a single function, the function reads the
+//problem dimention and execute the accordinly routine.
+//Outputs are von-mises stresses and linear displacementes
 
-function [Results,Udef]=solve_truss(conec, coord, Em, Im, Am, Gm, Jm, F)
-    
-    
 //Elements, Nodes & dimention
 [nos,sc]=size(coord);
 elem=size(conec,1);
 
+//Loads Properties
+A=Prop(:,1); E=Prop(:,2); I=Prop(:,3); G=Prop(:,4); J=Prop(:,5);
 //----------------PROGRAM 3D----------------------//
 if sc==3 then
 //Degrees of Freedom
@@ -19,32 +24,6 @@ Kg = zeros(ngl,ngl);
 N=zeros(2,elem);
 V=zeros(2,elem);
 M=zeros(2,elem);
-
-//Correct Material Properties Matrices
-warn=0;
-   if size(Em,1)==1
-       E(1:elem)=Em;
-   elseif size(Em,1)>1
-   warn=1; end
-      if size(Am,1)==1
-       A(1:elem)=Am;
-   elseif size(Am,1)>1
-   warn=1; end
-      if size(Im,1)==1
-       I(1:elem)=Im;
-   elseif size(Im,1)>1
-   warn=1; end
-         if size(Gm,1)==1
-       G(1:elem)=Gm;
-   elseif size(Gm,1)>1
-   warn=1; end
-         if size(Jm,1)==1
-       J(1:elem)=Jm;
-   elseif size(Jm,1)>1
-   warn=1; end
-   if warn==1 then
-       printf("WARNING: BAD MATERIAL PROPERTIES INPUT")
-   end
 
 //Local and Global Stiffness Matrices (2D case)
 for e=1:elem
@@ -211,25 +190,6 @@ N=zeros(1,elem);
 V=zeros(1,elem);
 M=zeros(2,elem);
 PP = zeros(3,1);
-
-//Correct Material Properties Matrices
-warn=0;
-   if size(Em,1)==1
-       E(1:elem,1)=Em;
-   elseif size(Em,1)>1 & size(Em,1)~=elem
-   warn=1; end
-      if size(Am,1)==1
-       A(1:elem,1)=Am;
-   elseif size(Am,1)>1 & size(Am,1)~=elem
-   warn=1; end
-      if size(Im,1)==1
-       I(1:elem,1)=Im;
-   elseif size(Im,1)>1  & size(Im,1)~=elem
-   warn=1; end
-   if warn==1 then
-       printf("WARNING: BAD MATERIAL PROPERTIES INPUT")
-   end
-
 
 //Local and Global Stiffness Matrices (2D case)
 for e=1:elem

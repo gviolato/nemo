@@ -15,10 +15,6 @@ Net = size(T,1);
 _3D_problem = (size(P,2)==3);
 
 if _3D_problem then
-    //Switching axes!
-    ss=P(:,2);
-P(:,2)=P(:,3);
-P(:,3)=ss;
   for ie = 1:Net
     XY = P(T(ie,:),:);
     X = [[XY(:,1)]; XY(1,1)];

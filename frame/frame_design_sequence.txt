@@ -4,7 +4,9 @@ Done - 2D Implementation of FEM
 
 Done - 3D Implementation of FEM
 
-Implement element refinement
+Done - Implement element refinement
+
+Extensive test with benchmark truss problems
 
 Create design load cases and constraints (max displacements)
 
