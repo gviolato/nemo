@@ -1,0 +1,18 @@
+TODO List / Steps  to accomplish for optimum frame design:
+
+Done - 2D Implementation of FEM 
+
+Done - 3D Implementation of FEM
+
+Done - Implement element refinement
+
+Extensive test with benchmark truss problems
+
+Create design load cases and constraints (max displacements)
+
+Create materials and sections library
+
+Design Preliminary frame Problem
+
+Implement optimization algorithm
+
