@@ -1,6 +1,0 @@
-// Design load cases Guide
-//
-// Diego Montero; Fernando Valentini; Gustavo Violato
-// First release: ....
-
-

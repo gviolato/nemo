@@ -7,15 +7,16 @@
 // First release: Oct. 2015 
 clc; xdel(winsid()); clear;
 
-//Change directory and call functions
-cd('C:\Users\dimon\Dropbox\GitHub\nemo\frame');
+//Add the NEMO_ROOT enviroment variable as the project folder in your computer to run the codes
+nemo_root = getenv('NEMO_ROOT');
+cd(nemo_root+'\frame');
 exec(pwd()+'\macros\library.sce');
 
 //Problem choice + Properties
-exec('3D_tetrahedron.sce');
+exec('2D_10-bar-truss.sce');
 
 //Mesh Refinement, input 0 to skip
-Ref=10;
+Ref=6000;
 [Ref_conec,Ref_coord,Ref_Prop]=refine(conec,coord,Prop,Ref);
 
 //Solve truss
@@ -27,11 +28,16 @@ disp(Results);
 
 //Plot results
 plottruss(Ref_conec,Ref_coord,'green');
-Def_coord=Ref_coord+10*Ref*Udef;
+Def_coord=Ref_coord+10*Udef;
 plottruss(Ref_conec,Def_coord,'red');
 legends(['before loading','after loading'], [color('green') color('red')], 'ur');
 
 // Change log
+
+//2015-10-17 - Diego Montero
+// ----------------------------
+//Fixed a potential bug on the DOF restrictions;
+//Code already benchmarked against other FEA softwares, everything is working fine so far;
 
 //2015-10-14 - Diego Montero
 // ----------------------------

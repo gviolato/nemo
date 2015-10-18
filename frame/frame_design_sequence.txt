@@ -6,13 +6,12 @@ Done - 3D Implementation of FEM
 
 Done - Implement element refinement
 
-Extensive test with benchmark truss problems
-
-Create design load cases and constraints (max displacements)
+Done - Extensive test with benchmark truss problems to guaratee performance
 
 Create materials and sections library
+
+Create design load cases and constraints (max displacements)
 
 Design Preliminary frame Problem
 
 Implement optimization algorithm
-

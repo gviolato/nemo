@@ -39,13 +39,9 @@ for e=1:elem
     zadd=zin/new;
     
     //Adds the subsections to NewCoord
-    for r=1:(new-1)
-        if r==1 then
-    NewCoord(r,:)=[x1+xadd y1+yadd z1+zadd];
-        end
-        if r>1 then
-    NewCoord(r,:)=NewCoord(r-1,:)+[xadd yadd zadd];
-        end
+    NewCoord(1,:)=[x1+xadd y1+yadd z1+zadd];
+    for r=2:(new-1)
+        NewCoord(r,:)=NewCoord(r-1,:)+[xadd yadd zadd];
     end
     
     //Inputs NewCoord into coordinates matrix
@@ -53,17 +49,12 @@ for e=1:elem
     Ref_coord((a1+1):(a1+new-1),:)=NewCoord(:,:);
     
     //Corrects conectivity matrix
-    for r=1:(new)
-        if r==1 then
-        Ref_conec(e,:)=[n1 (a1+1)];
-        end
-        if r>1 then
+    Ref_conec(e,:)=[n1 (a1+1)];
+    for r=2:(new)
         [a2,b2]=size(Ref_conec);
         Ref_conec(a2+1,:)=[a1+(r-1) (a1+r)];
-        
     //And material properties
         Ref_Prop(a2+1,:)=Prop(e,:);
-    end
     end
     Ref_conec(a2+1,2)=n2;
 end

@@ -299,6 +299,8 @@ if DO_PLOTS
   xlabel('Wing Span [m]');
   ylabel('Aspect Ratio');
   xtitle('Performance Curves. Rider: '+rider.name);
+  
+  legends(['Take-off speed','Cruise speed','Min power','Tip deflection'], [color('green') color('blue') color('red') color('magenta')], 'ur');
 
   setmyaxprops();
   ax = gca();
@@ -351,6 +353,10 @@ mprintf('Speed@MinPwr   [m/s]: %.1f\n',minpwrvel);
 
 
 // Change log
+
+// 2015-10-17 - Diego Montero
+// ----------------------------
+// Added legends to the line functions :)
 
 // 2015-09-29 - Gustavo Violato
 // ----------------------------

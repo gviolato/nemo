@@ -11,6 +11,13 @@ elem=size(conec,1);
 
 //Loads Properties
 A=Prop(:,1); E=Prop(:,2); I=Prop(:,3); G=Prop(:,4); J=Prop(:,5);
+
+//Assures that restricted DOF were entered correctly
+[dbg,nglr]=size(glrest) 
+if nglr==1 
+    glrest=glrest';
+end
+
 //----------------PROGRAM 3D----------------------//
 if sc==3 then
 //Degrees of Freedom
@@ -93,7 +100,7 @@ end
 Kgl = Kg; //Saves original Stiffness Matrix to Kgl (no DOF contraints)
 
 //Limits the chosen DOFs in the Global Stiffness Matrix
-nglr=size(glrest,1);
+[dbg,nglr]=size(glrest);
 for i=1:nglr
     Kg(glrest(i),:) = 0;
     Kg(:,glrest(i)) = 0;
@@ -169,7 +176,6 @@ end
 //Organize and display Results;
 Results(:,2)=S;
 Results(:,3)=Ulin;
-    
 end
 
     //----------------PROGRAM 2D----------------------//
@@ -180,7 +186,6 @@ if sc==2 then
 elem=size(conec,1);
 nos=size(coord,1);
 ngl = 3*nos;
-
 //Global Matrices inicialization
 Ul = zeros(4,1);
 Re = zeros(4,1);
@@ -237,7 +242,7 @@ end
 Kgl = Kg; //Saves original Stiffness Matrix to Kgl (no DOF contraints)
 
 //Limits the chosen DOFs in the Global Stiffness Matrix
-nglr=size(glrest,1);
+[dbg,nglr]=size(glrest);
 for i=1:nglr
     Kg(glrest(i),:) = 0;
     Kg(:,glrest(i)) = 0;

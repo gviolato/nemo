@@ -78,5 +78,6 @@ else
 
   f = gca();
   f.data_bounds = [x_min-0.1*delta_x, y_min-0.1*delta_y; x_max+0.1*delta_x, y_max+0.1*delta_y];
+f.isoview = "on"
 end
 endfunction
