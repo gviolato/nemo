@@ -24,7 +24,7 @@ gustavo.pwr  = 300;
 gustavo.name = "Gustavo";
 
 fernando.mass = 88;
-fernando.pwr  = 300;
+fernando.pwr  = 250;
 fernando.name = "Valentini";
 
 diego.mass = 72;
@@ -32,7 +32,7 @@ diego.pwr = 275;
 diego.name = "Diego";
 
 // Chosen wing dimensions
-prj_span = 1.80;    // [m]
+prj_span = 2.0;    // [m]
 prj_aspect = 18;    // [m]
 
 // Rider
@@ -55,8 +55,11 @@ t_strut  = 0.028;  // strut thickness              [m]
 CD_fw    = 0.009;  // front-wing drag coeff
 S_fw     = 0.04;   // front-wing area              [m^2]
 CD_spray = 0.24;   // spray drag coeff
-CD_air   = 0.7;    // Drag coefficient of air-exposed comp.
-S_air    = 0.6503; // Area of air-exposed comp.    [m^2]
+CD_air   = 1.0;    // Drag coefficient of air-exposed comp.
+S_air    = 0.35; // Area of air-exposed comp.    [m^2]
+// "20-Knot" article values are CD_air=0.7 and S_air=0.6503
+// Recumbent "Robinho" area is 0.377m^2
+// It seems that a 'drag area" of 0.35m^2 for recumbent is reasonable
 
 // Drag Sum-Up (all sources except wing)
 

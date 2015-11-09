@@ -1,0 +1,11 @@
+# Ignore dropbox folder, which should be mounted at repo root as 'dbfiles'
+dbfiles
+
+# Ignore emacs autosave
+*~
+
+# Ignore makefile
+makefile
+
+# Ignore compiled python sources
+*.pyc
