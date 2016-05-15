@@ -19,8 +19,8 @@ GRAV = 9.80665;   // gravity [m/s^2]
 FT2M = 0.3048;    // feet to meter
 
 // Riders parameters
-gustavo.mass = 85;
-gustavo.pwr  = 300;
+gustavo.mass = 87;
+gustavo.pwr  = 215;
 gustavo.name = "Gustavo";
 
 fernando.mass = 88;
@@ -36,7 +36,7 @@ prj_span = 2.0;    // [m]
 prj_aspect = 18;    // [m]
 
 // Rider
-rider = fernando;
+rider = gustavo;
 
 // User defined variables
 rho_w    = 1000;    // density of water 16C        [kg/m^3]
@@ -349,7 +349,7 @@ mprintf('-Performance----\n');
 mprintf('Take-off speed [m/s]: %.1f\n',to_speed);
 mprintf('Take-off power   [W]: %.1f\n',to_power);
 mprintf('Cruise Speed   [m/s]: %.1f\n',cruise_speed);
-mprintf('Range           [km]: %.2f\n',cruise_speed*0.5*3600/1000);
+mprintf('Range           [km]: %.2f\n',cruise_speed*1.0*3600/1000);
 mprintf('Speed@750W     [m/s]: %.1f\n',max_speed);
 mprintf('Min power        [W]: %.1f\n',min_power);
 mprintf('Speed@MinPwr   [m/s]: %.1f\n',minpwrvel);

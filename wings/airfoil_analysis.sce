@@ -48,7 +48,7 @@ w_temp = 21; // Water temperature [degC]
 // Obs.  Temp varies annually between 17degC and 25degC @ Babitonga Bay
 // Source: http://www.avesmarinhas.com.br/Mestrado%20Mario.pdf
 
-v_cruise = 5.; // Cruise speed [m/s]
+v_cruise = 5.0; // Cruise speed [m/s]
 
 // Riders parameters
 rider.mass = 85;          // [kg]

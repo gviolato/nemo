@@ -1,0 +1,223 @@
+ah63k127
+ah79k132
+ah79k135
+ah80129
+ah80136 # Reasonable,  Hard2Build TE
+ah80140
+ah81131
+ah88k130
+ah88k136
+ah93k130
+ah93k131
+ah93k132
+amsoil1 # Maybe for canard
+apex16  # Reasonable to good. Designed for M~0.65
+arad13
+b737b
+bacxxx  # Could be good. Need to check history
+boe103  # Reasonable. Good shape 
+boe106  # Reasonable. Good shape LDmax=99
+c141a   
+c141b
+c5b
+c5c
+c5d
+cast102
+clarkk
+clarkv
+clarkw
+clarkx
+clarky
+clarkys
+clarkysm
+clarkz
+davis
+defcnd3  # Another Rutan Canard airfoil
+dfvlrr4
+e197
+e201
+e203
+e209
+e210
+e214     ## Good performance, Thin TE, high CLmax.
+e220     # Reasonable. Thin TE
+e231
+e325
+e326
+e327
+e328
+e329
+e330
+e331
+e332
+e333
+e334
+e335
+e336
+e337
+e338
+e339
+e340
+e341
+e360
+e361
+e393    ## Good performance, Thin TE, high CLmax.
+e434
+e485    ## Maybe for canard
+e625  
+e635
+e636
+e637
+e638
+e668
+e67    ## Good performance, Thin TE, high CLmax.
+e68
+e853
+e854
+eh2012
+eh3012
+falcon
+fauvel
+fx05h126
+fx082512
+fx60126  ## Reasonable to good performance, Thin TE, high CLmax.
+fx601261
+fx61140
+fx62k131
+fx68h120
+fx74130wp1
+fx74130wp2
+fx74130wp2mod
+fx84w127
+goe12k   !! PUlei os GOE (Gothingen). A princípio, velhos e ultrapassados
+goe14k
+goe285
+goe416a
+goe478
+goe479
+goe526
+goe548
+goe550
+goe559
+goe575
+goe593
+goe600
+goe617
+goe623
+goe629
+goe632
+goe633
+goe650
+goe655
+goe676
+goe677
+goe685
+goe693
+goe704
+goe723
+goe766
+goe767
+goe780
+goe796   !! Pulei os GOE (Gothingen). A princípio, velhos e ultrapassados
+gs1
+hq1512 ## Reasonable to good performance, Thin TE, Just enough CLmax.
+hq2012 ## almost the same as hq1512
+hq2512 ## similar to both above progressingly better at Clmax
+hq3012 ## similar to above progressingly better at Clmax
+hq3013 ## similar to above progressingly better at Clmax
+hq3014 ## similar to above progressingly better at Clmax
+hq3512 ## Reasonable to good performace. Bucket between 0.2 and 0.9
+hq3513 ## Reasonable to good performace. Bucket between 0.3 and 1.0
+hq3514 ## Reasonable to good performace.
+hsnlf213
+k1
+k3311sm  ## Good performance. Somewhat sharp TE. Good Clmax
+kc135b
+l188root # Reasonable to poor performance. Nice thickness 0.14.
+l188tip  ## Reasonable to good performance. A bit poor performance at high Cl
+la2573a  
+lds2     ## Reasonable to good performance. A bit poor performance at high Cl
+ls413    
+ls413mod
+m12
+m15
+m18
+m6
+marske1
+marske2
+marske3
+marske5
+marske7
+mh106
+mh108
+mh120
+mh18
+mh200
+mh201        # Canard section
+mh27
+mh70
+mh80
+mh81
+mh82
+mrc-16   ## Reasonable to good performance. Good t/c, well rounded perf around Clmax
+ms313    
+n2414    ## Reasonable to poor performance.
+n63212
+n63412   ## Reasonable performance. A bit poor performance at high Cl
+n64212
+n64212ma
+n64212mb
+n8h12
+naca23012
+naca651212
+naca651212a06
+naca651412
+naca661212
+nacam12
+nacam6
+ncambre
+npl9510
+npl9615
+npl9660
+oa212
+oa213
+oaf117
+p51dtip
+p51htip
+psu-90-125wl  # Reasonable perf.
+pt40
+rae2822
+rae5212
+rae69ck
+raf31         # Reasonable to good perf. Not great at high Cl
+raf34
+raf38
+rc12b3
+rc12n1
+rg15a213     # Reasonable perf. Well rounded perf at high Cl
+s4022        ## Reasonable to good perf. Very well rounded at high Cl
+s4233        # Reasonable perf. Very well rounded at high Cl
+s8052        # Reasonable to good perf. Poor perf at high Cl
+s8055	     ## Reasonable to good perf. Poor perf at high Cl
+sc1012r8     
+sc20412
+sc20612
+sc20614
+sc20712
+sc20714
+sd7062
+sg6051      # Reasonable to good perf. Reasonably rounded
+stcyr171
+ste87151
+tsagi12     # Maybe for canard
+usa28      
+usa35b
+usa40
+usa40b
+usa45m
+v43012
+vr5
+vr7
+vr7b
+wb13535sm
+wb140

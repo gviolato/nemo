@@ -9,3 +9,6 @@ makefile
 
 # Ignore compiled python sources
 *.pyc
+
+# Ignore IPython Notebook's checkpoints
+.ipynb_checkpoints

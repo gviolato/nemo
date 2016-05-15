@@ -16,15 +16,24 @@ from glob import glob
 # User defined variables
 
 AIRFOIL_DB = os.environ['NEMO_ROOT']+"/dbfiles/airfoils"
-TCK_MIN = 0.10 # Minimum acceptable thickness
-TCK_MAX = 0.15 # Maximum acceptable thickness
+TCK_MIN = 0.11 # Minimum acceptable thickness
+TCK_MAX = 0.14 # Maximum acceptable thickness
+CBR_MIN = 0.010 # Minimum acceptable camber
+CBR_MAX = 0.045 # Maximum acceptable camber
+
+POLAR_HDR_NLINES = 12
 
 # Auxiliary functions
 
+def WriteAirfoil(filepath,airfoil):
+    np.savetxt(filepath, airfoil['coords'], fmt='%10.6f',
+               delimiter=' ', header=airfoil['name'].strip(),
+               comments='')
+    
 def ReadAirfoil(filepath):
     foil = dict()
     with open(filepath,"r") as fid:
-        foil['name'] = fid.readline()
+        foil['name'] = fid.readline().strip()
     foil['coords'] = np.loadtxt(filepath,skiprows=1)
     return foil
 
@@ -39,7 +48,8 @@ def SplitUpperLower(airfoil):
     return (up,lo)
 
 def GetFoilThickness(airfoil):
-    xc = np.linspace(0,1)
+    a = np.linspace(0,np.pi,70)
+    xc = (1-np.cos(a))/2
     xc = xc.reshape((len(xc),1))
     (up,lo) = SplitUpperLower(airfoil)
     idx_up = np.argsort(up[:,0])
@@ -49,7 +59,8 @@ def GetFoilThickness(airfoil):
     return np.hstack((xc, up_i-lo_i))
 
 def GetFoilCamberline(airfoil):
-    xc = np.linspace(0,1)
+    a = np.linspace(0,np.pi,70)
+    xc = (1-np.cos(a))/2
     xc = xc.reshape((len(xc),1))
     tck = GetFoilThickness(airfoil)
     (up,lo) = SplitUpperLower(airfoil)
@@ -85,10 +96,11 @@ if __name__=="__main__":
         try:
             airfoil = ReadAirfoil(fpath)
             props = GetFoilProps(airfoil)
-            if props['t/c']>0.1 and props['t/c']<0.15:
-                print os.path.basename(fpath)[:-4]
+            if props['t/c']>TCK_MIN and props['t/c']<TCK_MAX:
+                if props['h/c']>CBR_MIN and props['h/c']<CBR_MAX:
+                    print os.path.basename(fpath)[:-4]
         except:
-            print "Erro! " + fpath
+            print "Error! " + fpath
 
 
 # Change log

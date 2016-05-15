@@ -1,0 +1,20 @@
+LOAD {{ vars.airfoil_path }}
+PANE
+OPER
+TYPE
+2
+VPAR
+NT {{ vars.ncrit }}
+NB {{ vars.ncrit }}
+
+RE {{ vars.re_sqrtcl }}
+VISC
+ITER {{ vars.niter }}
+PACC
+
+
+CSEQ {{ vars.cl_min }} {{ vars.cl_max }} {{ vars.d_cl }}
+PWRT
+{{ vars.polar_file }}
+
+QUIT
