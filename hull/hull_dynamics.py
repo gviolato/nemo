@@ -191,10 +191,14 @@ def long_actions(Mass,cgZ,angles,position,shape,w):
     (F_z, _, M_y) = actions(Mass,cgZ,angles,position,shape,w)
     return np.array([F_z, M_y])
     
-def equilibrium(mass,cgZ,shape,w):
+def equilibrium(mass,cgZ,shape,w,verbose=None):
     obj_fun = lambda x: actions(mass,cgZ,np.array([x[0],x[1],0.]),
                                 np.array([0.,0.,x[2]]),shape,w)
-    
-    sol = optim.root(obj_fun,np.array([0.,0.,0.]),method='krylov',
-                     callback=callbackfun)
+
+    if verbose:
+        sol = optim.root(obj_fun,np.array([0.,0.,0.]),method='krylov',
+                         callback=callbackfun)
+    else:
+        sol = optim.root(obj_fun,np.array([0.,0.,0.]),method='krylov')
+        
     return tuple(sol.x)

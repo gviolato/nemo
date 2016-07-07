@@ -1,0 +1,17 @@
+#!/bin/bash
+
+HULL_RESULTS=~/prjs/hph/nemo/hull/results
+
+cp ./examples/{{ hull_offsets }} ./useroff1.csv
+cp useroff1.csv useroff2.csv
+wine32 mlt933w.exe &>/dev/null &
+sleep 5
+export mlt=(`xdotool search --name Mich*`)
+xdotool windowactivate $mlt click --window $mlt --delay 250 1 key --delay 250 --window $mlt shift+r
+xdotool windowactivate $mlt click --window $mlt --delay 250 1 key --delay 250 --window $mlt shift+c
+sleep 5
+xdotool windowactivate $mlt click --window $mlt --delay 250 1 key --delay 250 --window $mlt Escape
+xdotool windowactivate $mlt click --window $mlt --delay 250 1 key --delay 250 --window $mlt Escape
+xdotool windowactivate $mlt click --window $mlt --delay 250 1 key --delay 250 --window $mlt Escape
+xdotool windowactivate $mlt click --window $mlt --delay 250 1 key --delay 250 --window $mlt y &>/dev/null
+mv drag.mlt $HULL_RESULTS/{{ result_file }}

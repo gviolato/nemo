@@ -24,11 +24,18 @@ def normal_pol2(ksi, frac):
 def normal_pol4(ksi, frac):
     return frac*(np.power(ksi,4)-1)
 
-def wigley_wl(ksi, frac, a=1.):
-    return frac*(1-np.power(ksi,2))*(1+a*np.power(ksi,2))
+def wigley_wl(ksi, frac, f0=1.):
+    x = (ksi+1.)/2.
+    X = 4.*x*(1.-x)
+    return frac*X**f0
 
-def wigley_cross(x):
-    return np.sqrt(1-x)
+def wigley_keel(ksi, frac, f2=0.):
+    x = (ksi+1.)/2.
+    X = 4.*x*(1.-x)
+    return -1*frac*X**f2
+
+def wigley_cross(x, f1=1.):
+    return np.sqrt(1-x**(1./f1))
 
 def oval(x,pwr,root):
     return np.power(1-np.power(x,pwr),1./root)

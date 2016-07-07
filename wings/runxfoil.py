@@ -16,9 +16,9 @@ from jinja2 import Environment, FileSystemLoader
 # User defined variables
 
 XFOIL_DIR = "../../tools/Xfoil" # CHANGE TO YOUR XFOIL PATH
-COORD_DIR = "../../nemo/dbfiles/airfoils/uiuc/coordinates"
+COORD_DIR = "../../nemo/dbfiles/subsistemas/airfoils/uiuc/coordinates"
 WING_DIR = "../../nemo/wings"
-AIRFOIL_FILE = "gv_foils.txt"
+AIRFOIL_FILE = "test.txt"
 TEMPLATE = "input.j2"
 
 N_CRIT = 7.5
@@ -50,13 +50,16 @@ if __name__=="__main__":
     template = env.get_template(TEMPLATE)
     # For each airfoil, run input on xfoil
     with open(AIRFOIL_FILE,'r') as fid:
+        print "bla"
         for line in fid.readlines():
+            print line
             with open(XFOIL_DIR+"/input","w") as fin:
                 fin.write(template.render(
                     vars=populate_vars(line.strip())))
             cat = subprocess.Popen(('cat', XFOIL_DIR+'/input'),stdout=subprocess.PIPE)
             output = subprocess.check_output((XFOIL_DIR+'/xfoil'), stdin=cat.stdout)
             cat.wait()
+            print cat, output
 
             
 
