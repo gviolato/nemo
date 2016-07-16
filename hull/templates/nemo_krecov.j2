@@ -1,0 +1,200 @@
+# ======================================================================
+#
+# nemo.mlt
+#
+# Nemo Human-Powered Hidrofoil Hulls
+# Prepared for hull with rectangular keel, 4th pol waterline and oval cross
+# Gustavo Violato, Diego Montero, Fernando Valentini - Mai/2016
+#
+# =================== INPUT FILE TYPE AND SUBTYPE ======================
+# Input File Type (0=Standard)
+0
+# Input File Subtype (0=Standard)
+0
+# =================== OUTPUT FILE TYPE AND SUBTYPE =====================
+# Output File Type (0=Standard)
+0
+# Output File Subtype (0=Standard)
+0
+# ====================== COURSE AND VESSEL TYPE ========================
+# Course Particulars (0=None)
+0
+# Number of Hulls (1, 2,..., or 5)
+2
+# ======================== PHYSICAL QUANTITIES =========================
+# Gravitational Acceleration (m/sec/sec) (min 9.6, max 9.9)
+9.80665
+# ========================= WATER PROPERTIES ===========================
+# Water Density (kg/cubic metre) (min 995.0, max 1030.0)
+1025.9
+# Water Kin. Viscosity (sq. m/sec * 10^-6) (min 0.5, max 2.0)
+1.18831
+# Base Eddy Kin. Viscosity (non-dimensional, min 1.0)
+10.0
+# Water Depth (metres) (max=10000.0)
+3.0
+# ========================== AIR PROPERTIES ============================
+# Air Density (kg/cubic metre) (min 0.9, max 2.0)
+1.225
+# Air Kin. Viscosity (sq. m/sec * 10^-6) (min 10.0, max 20.0)
+14.4
+# Wind Speed (m/sec)
+0.0
+# Wind Direction (degrees)
+0.0
+# ======================= CALCULATION PARAMETERS =======================
+# Minimum Speed (m/sec) (min 0.01, max 51.9)
+0.1
+# Maximum Speed (m/sec) (max 52.0)
+5.0
+# Number of Speeds (min 2, max 101)
+25
+# Leeway Parameters (0=None)
+0
+# Wave Drag Ntheta
+512
+# Skin Friction Method (0=None, 1=ITTC1957, 2=Grigson)
+1
+# Viscous Form Factor Method (0=None, 3=Dual)
+3
+# Viscous Drag Form Factor
+1.0
+# Wave Drag Form Factor
+1.0
+# Pressure Signature Method (0=None,1=Slender body)
+1
+# ==================== SHIP CALCULATION PARAMETERS =====================
+# Number of Offset Stations (rows) (odd integer: min 5, max 81)
+51
+# Number of Offset Waterlines (columns) (odd integer: min 5, max 81)
+41
+# Ship Loading Type
+3
+# Ship Loading Formula Parameters
+1.0,0.0,0.0
+# ===================== WAVE ELEVATION PARAMETERS ======================
+# Sectorial Cuts and Patches
+# R0
+19.623
+# R1
+77.266
+# Beta
+22.5
+# Nr
+100
+# Nbeta
+100
+# Rectangular Cuts and Patches
+# x0
+0.0
+# x1
+40.0
+# y0
+-20.0
+# y1
+20.0
+# Nwx
+151
+# Nwy
+151
+# Beaches and Walls
+# x0
+16.0
+# x1
+60.0
+# y0
+15.0
+# z0
+-1.0
+# z1
+0.0
+# Slope
+90.0
+# Nbx
+11
+# Nbz
+11
+# ============================ FIRST HULL ==============================
+# Offsets
+-1
+# Displacement Volume (cubic metres)
+0.06625
+# Length (metres)
+2.3
+# Draft (metres)
+0.230
+# Longitudinal Separation (metres)
+0.0
+# Lateral Separation Distance (metres)
+-0.75
+# Loading Type for this hull
+3
+# Loading Formula Parameters
+1.0,0.0,0.0
+# Trim Method
+3
+# Trim: Number of speeds ( >= 2)
+2
+# Trim: speed, angle
+0.1,{{ trim }}
+5.0,{{ trim }}
+# Sinkage Method
+3
+# Sinkage: Number of speeds ( >= 2)
+2
+# Sinkage: speed, amount
+0.1,{{ sinkage }}
+5.0,{{ sinkage }}
+# Heel Method
+0
+# Heel: Number of speeds ( >= 2)
+2
+# Heel: speed, angle
+0.0,0.0
+40.0,0.0
+# Appendages (0=None)
+0
+# Other Particulars (0=None)
+0
+# =========================== SECOND HULL ==============================
+# Offsets
+-1
+# Displacement Volume (cubic metres)
+0.06625
+# Length (metres)
+2.3
+# Draft (metres)
+0.230
+# Longitudinal Separation (metres)
+0.0
+# Lateral Separation Distance (metres)
+0.75
+# Loading Type for this hull
+3
+# Loading Formula Parameters
+1.0,0.0,0.0
+# Trim Method
+3
+# Trim: Number of speeds ( >= 2)
+2
+# Trim: speed, angle
+0.1,{{ trim }}
+5.0,{{ trim }}
+# Sinkage Method
+3
+# Sinkage: Number of speeds ( >= 2)
+2
+# Sinkage: speed, amount
+0.1,{{ sinkage }}
+5.0,{{ sinkage }}
+# Heel Method
+0
+# Heel: Number of speeds ( >= 2)
+2
+# Heel: speed, angle
+0.0,0.0
+40.0,0.0
+# Appendages (0=None)
+0
+# Other Particulars (0=None)
+0
