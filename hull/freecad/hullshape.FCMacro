@@ -1,0 +1,29 @@
+import FreeCAD
+from FreeCAD import Base
+import Part
+import importAirfoilDAT
+
+SECTION_DIR = "/home/gustavo/prjs/hph/nemo/hull/cross_sections"
+
+App.setActiveDocument("Unnamed")
+App.ActiveDocument=App.getDocument("Unnamed")
+Gui.activateWorkbench("DraftWorkbench")
+
+section_list = list()
+with open(SECTION_DIR+'/offsets.dat','r') as fid:
+    for i, line in enumerate(fid):
+        cs_file = 'cs_{:02d}.dat'.format(i)
+        objname = "DWire"
+        if i:
+            objname += '{:03d}'.format(i)
+        importAirfoilDAT.insert(SECTION_DIR + "/" + cs_file,"Unnamed")
+        cur_section = FreeCAD.getDocument("Unnamed").getObject(objname)
+        cur_section.Placement = App.Placement(App.Vector(0,0,float(line.strip())),App.Rotation(App.Vector(0,0,1),0))
+        section_list.append(cur_section)
+
+Gui.activateWorkbench("PartWorkbench")
+App.getDocument('Unnamed').addObject('Part::Loft','Loft')
+App.getDocument('Unnamed').ActiveObject.Sections=section_list
+App.getDocument('Unnamed').ActiveObject.Solid=True
+App.getDocument('Unnamed').ActiveObject.Ruled=False
+App.getDocument('Unnamed').ActiveObject.Closed=False

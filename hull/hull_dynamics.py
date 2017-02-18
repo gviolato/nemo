@@ -192,13 +192,15 @@ def long_actions(Mass,cgZ,angles,position,shape,w):
     return np.array([F_z, M_y])
     
 def equilibrium(mass,cgZ,shape,w,verbose=None):
+
+    # !! Comment modafoca.
     obj_fun = lambda x: actions(mass,cgZ,np.array([x[0],x[1],0.]),
                                 np.array([0.,0.,x[2]]),shape,w)
 
     if verbose:
-        sol = optim.root(obj_fun,np.array([0.,0.,0.]),method='krylov',
+        sol = optim.root(obj_fun,np.array([0.,0.,0.02]),method='krylov',
                          callback=callbackfun)
     else:
-        sol = optim.root(obj_fun,np.array([0.,0.,0.]),method='krylov')
+        sol = optim.root(obj_fun,np.array([0.,0.,0.02]),method='krylov')
         
     return tuple(sol.x)

@@ -1,0 +1,38 @@
+clarkw
+clarkysm
+clarkz
+davis
+e193
+e214
+e392    # Looks good for canard. Tip hard to build
+e393
+e66
+e67
+fx082512
+fx601001
+fx63110
+fx83w108
+goe12k
+goe285
+goe389
+goe436
+goe438
+goe479
+goe546
+goe547
+goe593
+goe613
+goe623
+goe682
+goe693
+goe723
+goe796
+gv07
+oaf102
+raf32md
+s2091   # Good performance
+s4022
+s4158
+s4310   # Good performance. Maybe the best
+s7055   # Good performance
+sd7034  # Good performance

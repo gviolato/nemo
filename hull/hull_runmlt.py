@@ -20,27 +20,31 @@ import hull_geom as geo
 import hull_dynamics as dyn
 
 MLT_HOME = '/home/gustavo/prjs/hph/tools/mlt933'
-TYPE = 'krecov';
+TYPE = 'assim_trapz';
 
-L   = 2.3;         # hull length in m
-alt  = 0.06;
-Prof = 0.23;       # Draft
-Aber = 0.20/2;     # Beam
-w = 1.50           # Separation
+L      = 2.30;       # hull length (LOA) in m
+alt    = 0.05;       # Height of top
+pontal = 0.18;       # Draft
+mboca  = 0.29/2      # Half-beam
+w      = 1.35        # Separation
 
 mass = 87.+14
-cgZ = np.array([0.15,0.,0.2])
+cgZ = np.array([0.074,0.,0.2])
 
 class BuoyShape():
-    def __init__(self,length,depth,width,height,pwr,root):
+    def __init__(self,length,depth,width,height):
         self.length = length
-        self.keel   = lambda x: geo.normal_rectangle(x,depth/length)
-        self.cap    = lambda x: -1*geo.normal_pol4(x,height/length)
-        self.waterline   = lambda x: -1*geo.normal_pol4(x,width/length)
-        self.bottom   = lambda x: geo.oval(x,pwr,root)
-        self.top   = lambda x: -1*geo.normal_pol4(x,1)
+        self.keel   = lambda x: geo.trapz(x,depth/length,perc=0.92)
+        self.waterline   = lambda x: -geo.normal_pol(x,width/length,4)+0.01*np.sin(np.pi*x)
+        self.bottom   = lambda x: geo.wigley_cross(x)
+        self.cap    = lambda x: -1*geo.normal_pol(x,height/length,8)
+        self.top   = lambda x: geo.oval(x,6,2)
 
-shape = BuoyShape(L,Prof,Aber,alt,2,2)
+shape = BuoyShape(L,pontal,mboca,alt)
+
+mlt_pnts = geo.geom_to_mlt(shape, 0, 71, 61)
+np.savetxt(MLT_HOME + '/examples/nemohull_' + TYPE + '.txt',
+           -1*mlt_pnts,fmt='%.6f',delimiter=',')
 
 env = Environment(loader=FileSystemLoader('./templates'))
 sh_template = env.get_template('autorun.j2')
@@ -56,7 +60,7 @@ print "Theta={:.1f}".format(theta)+"deg"
 print "Dz={:.0f}".format(dz*1000)+"mm"
 
 drafts = np.linspace(0,-0.99,20)
-thetas = np.linspace(-1.1*theta,1.1*theta,10)
+thetas = np.arange(-6,6.1,0.5)
 
 for (d,t) in it.product(drafts,thetas):
     res_fname = 'drag_' + TYPE + '_d{:.0f}t{:.2f}.dat'.format(abs(100*d),t)

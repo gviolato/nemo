@@ -15,11 +15,15 @@ import matplotlib.pyplot as plt
 import re
 from scipy.interpolate import RegularGridInterpolator
 
-DRAFT = 0.24
+PRINT_LUT = True
+
+TYPE = 'assim_trapz'
+
+DRAFT = 0.19
 PAT = re.compile('.*_d(.*)t(.*).dat')
 
-NV = 25
-NT = 10
+NV = 20
+NT = 25
 ND = 20
 
 # Helper class to automatically add item to list when
@@ -64,10 +68,41 @@ def read_results(result_fmt,verbose=False):
     drag_data = drag_data[:,ts,:]
     return (drag_data, (speed_list, theta_list, draft_list))
 
+def drag2CdS(drag_data, (ss,ts,ds), rho_mlt=1020):
+    CdS = np.zeros(drag_data.shape)
+    for i,s in enumerate(ss):
+        q = 0.5*rho_mlt*s**2
+        CdS[i,:,:] = drag_data[i,:,:]*1e6/q
+    return CdS
+
 def drag_fun(idxs,drag_data):
     return RegularGridInterpolator(idxs, drag_data)
 
+def pprint(mat,fmt='{:.3f},'):
+    dim = mat.ndim
+    retstr = '['
+    if dim==1:
+        for e in mat:
+            retstr += fmt.format(e)
+        retstr = retstr[:-1] + ']'
+    else:
+        for submat in mat:
+            retstr += pprint(submat) + ','
+    retstr = retstr[:-1] + ']'
+    return retstr
+
 if __name__=='__main__':
-    (drag_data, idxs) = read_results('./results/drag_krecov_d*t*.dat',
-                                     verbose=True)
+    (drag_data, idxs) = read_results('./results/drag_'+TYPE+'_d*t*.dat',
+                                     verbose=False)
+    CdS = drag2CdS(drag_data, idxs)
     hull_drag = RegularGridInterpolator(idxs, drag_data)
+    if PRINT_LUT:
+        idx_names = ['V','Theta','Disp']
+        factors = [1.,np.pi/180,1.]
+        bias = [0.,0.,-0.190]
+        for i,x in enumerate(idxs):
+            print idx_names[i], ':'
+            print pprint(np.array(x)*factors[i]+bias[i])
+        print 'Values:'
+        print pprint(CdS)
+

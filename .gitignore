@@ -1,6 +1,9 @@
 # Ignore dropbox folder, which should be mounted at repo root as 'dbfiles'
 dbfiles
 
+# Ignore all directories named sandbox
+sandbox/
+
 # Ignore emacs autosave
 *~
 

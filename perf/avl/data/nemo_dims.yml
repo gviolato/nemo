@@ -1,0 +1,29 @@
+# Wing geometry and properties
+wing:
+  pos:    0.11    # horizontal distance from CG pos to surface 1/4c
+  h_cg:   0.985   # vertical distance from CG pos to surface 1/4c
+  S:      0.191   # reference area [m^2]
+  AR:     17  
+  lambda: 0.45
+  Cla:    5.599
+  Cl0:    0.360
+  Cm:     -0.075
+
+canard:
+  pos:    1.430   # horizontal distance from CG pos to surface 1/4c
+  h_cg:   0.      # vertical distance from CG pos to surface 1/4c
+  S:      0.018   # reference area [m^2]
+  AR:     7  
+  lambda: 1.00
+  Cla:    4.541
+  Cl0:    0.303
+  Cm:     -0.080
+  
+keel:
+  pos:    0.
+  h_cg:   0.5
+  S:      0.1
+  Cd:     0.007
+
+prop:
+  h_cg:   0.8    # vertical distance from CG pos to prop axis

@@ -4,40 +4,45 @@ import numpy as np
 
 import hull_geom as geo
 
-L   = 2.3;         # hull length in m
-alt  = 0.06;
-Prof = 0.24;       # Draft
-Aber = 0.20/2;     # Beam
+NSTTS = 101
+TOL = 1E-3
+
+L      = 2.30;       # hull length (LOA) in m
+alt    = 0.05;       # Height of top
+pontal = 0.18;       # Draft
+mboca  = 0.29/2      # Half-beam
 
 class BuoyShape():
-    def __init__(self,length,depth,width,height,pwr,root):
+    def __init__(self,length,depth,width,height):
         self.length = length
-        self.keel   = lambda x: geo.normal_pol4(x,depth/length)
-        self.cap    = lambda x: -1*geo.normal_pol4(x,height/length)
-        self.waterline   = lambda x: -1*geo.normal_pol4(x,width/length)
-        self.bottom   = lambda x: geo.oval(x,pwr,root)
-        self.top   = lambda x: -1*geo.normal_pol4(x,1)
+        self.keel   = lambda x: geo.trapz(x,depth/length,perc=0.96)
+        self.waterline   = lambda x: -geo.normal_pol(x,width/length,4)+0.01*np.sin(np.pi*x)
+        self.bottom   = lambda x: geo.wigley_cross(x)
+        self.cap    = lambda x: -1*geo.normal_pol(x,height/length,8)
+        self.top   = lambda x: geo.oval(x,6,2)
 
 if __name__=="__main__":
-    shape = BuoyShape(L,Prof,Aber,alt,4,2)
-    xs = np.linspace(-1,1,21)
+    shape = BuoyShape(L,pontal,mboca,alt)
+    xs = np.cos(np.linspace(-1,0,NSTTS)*np.pi)
     STTS = list()
     for i,x in enumerate(xs):
         offset = 0
         if i==0:
-            offset = 0.001
-        elif i==20:
-            offset = -0.001
-            station = shape.length/2*(x+1) + offset
+            offset = 0.00025
+        elif i==NSTTS-1:
+            offset = -0.00025
+        if abs(abs(x)-0.96)<TOL:
+            x = np.sign(x)*0.96
+        station = shape.length/2*(x+1) + offset
         STTS.append(station)
         cs_b = geo.cross_section(station,
                                  shape.length,shape.keel,
-                                 shape.waterline,shape.bottom, 50)
+                                 shape.waterline,shape.bottom, 70)
         cs_t = geo.cross_section(station,
                                  shape.length,shape.cap,
-                                 shape.waterline,shape.top, 50)
+                                 shape.waterline,shape.top, 40)
         cs = np.hstack((cs_b,cs_t[:,-2::-1]))*1000
-        np.savetxt('./results/cs_{:02d}.dat'.format(i),cs.T,
-                   delimiter=',',fmt='%.5f',header='HULL SECTION')
+        np.savetxt('./cross_sections/cs_{:02d}.dat'.format(i),cs.T,
+                   delimiter=',',fmt='%.5f',header='HULL SECTION {}'.format(i))
 
-    np.savetxt('./results/offsets.dat',np.array(STTS)*1000,fmt='%.3f')
+    np.savetxt('./cross_sections/offsets.dat',np.array(STTS)*1000,fmt='%.3f')

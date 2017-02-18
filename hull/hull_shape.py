@@ -13,30 +13,31 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.interpolate as interpolate
 
+
 import hull_geom as geo
 import hull_dynamics as dyn
 import hull_plot as plot
 
 # User define variables
 
-PLOTS = 1
+PLOTS = 0
 NOT_CONTOURS=1
 SAVE  = 0
-EQUIL = 1
+EQUIL = 0
 
-HULL_NAME = 'nemohull_krecov.txt' # nemohull_wig.txt
+HULL_NAME = 'nemohull_assim.txt' # nemohull_wig.txt
 
-L   = 2.3;         # hull length in m
-alt  = 0.06;
-Prof = 0.24;       # Draft
-Aber = 0.20/2;     # Beam
+L   = 2.30;         # hull length in m
+alt  = 0.05;
+Prof = 0.18;       # Draft
+Aber = 0.29/2;     # Beam
 w = 1.50           # Separation
     
 V_TO = [0.1,0.2,0.5,0.7,1.0,1.2,1.5,1.7,2.0,2.2,2.5,2.7,3.0]
 
 # Define the total mass and CG position
 mass = 87.+14
-cgZ = np.array([0.1,0.25,0.2])
+cgZ = np.array([0.075,0.,0.2])
 
 ### Shape-defining functions
 
@@ -50,14 +51,23 @@ cgZ = np.array([0.1,0.25,0.2])
 #         self.bottom   = lambda x: geo.wigley_cross(x)
 #         self.top   = lambda x: -1*geo.normal_pol4(x,1)
 
+# class BuoyShape():
+#     def __init__(self,length,depth,width,height,pwr,root):
+#         self.length = length
+#         self.keel   = lambda x: geo.normal_pol4(x,depth/length)
+#         self.cap    = lambda x: -1*geo.normal_pol4(x,height/length)
+#         self.waterline   = lambda x: -1*geo.normal_pol4(x,width/length)
+#         self.bottom   = lambda x: geo.oval(x,pwr,root)
+#         self.top   = lambda x: -1*geo.normal_pol4(x,1)
+
 class BuoyShape():
     def __init__(self,length,depth,width,height,pwr,root):
         self.length = length
-        self.keel   = lambda x: geo.normal_pol4(x,depth/length)
+        self.keel   = lambda x: geo.normal_rectangle(x,depth/length)
         self.cap    = lambda x: -1*geo.normal_pol4(x,height/length)
-        self.waterline   = lambda x: -1*geo.normal_pol4(x,width/length)
-        self.bottom   = lambda x: geo.oval(x,pwr,root)
-        self.top   = lambda x: -1*geo.normal_pol4(x,1)
+        self.waterline   = lambda x: -1*geo.normal_pol4(x,width/length)+0.01*np.sin(np.pi*x)
+        self.bottom   = lambda x: geo.wigley_cross(x)
+        self.top   = lambda x: geo.oval(x,pwr,root)
         
 if __name__=="__main__":
     # Define the hull shape and dimensions
@@ -72,7 +82,7 @@ if __name__=="__main__":
     else:
         for v in V_TO:
             mass = 102-0.5*1000*v**2*0.222*1.001/9.80665
-            (_,_,dz) = dyn.equilibrium(mass,cgZ,shape,w)
+            (_,_,dz) = dyn.equilibrium(mass,cgZ,shape,w,verbose=0)
             print "{:.1f}\t{:.3f}".format(v,-1*dz/Prof)
 
     if PLOTS:
@@ -114,6 +124,13 @@ if __name__=="__main__":
     if SAVE:
         mlt_pnts = geo.geom_to_mlt(shape, dz, 51, 41)
         np.savetxt(HULL_NAME,-1*mlt_pnts,fmt='%.6f',delimiter=',')
-        
+
+    print '1-Hull Volume: {:.5f} m^3'.format(-1*geo.volume(shape.length,
+                                                           shape.keel,
+                                                           shape.waterline,
+                                                           shape.bottom))
+    
     if PLOTS:
         plt.show()
+
+    

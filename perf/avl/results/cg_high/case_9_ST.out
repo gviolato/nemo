@@ -1,0 +1,81 @@
+ ---------------------------------------------------------------
+ Vortex Lattice Output -- Total Forces
+
+ Configuration: Nemo Human Powered Hydrofoil. Wing (1.80 x 17)              
+     # Surfaces =   6
+     # Strips   = 102
+     # Vortices =1476
+
+  Sref = 0.19100       Cref = 0.11100       Bref =  1.8000    
+  Xref =-0.12345       Yref =  0.0000       Zref = 0.98500    
+
+ Standard axis orientation,  X fwd, Z down         
+
+ Run case: V=5.7                                   
+
+  Alpha =  -3.07733     pb/2V =  -0.00000     p'b/2V =  -0.00000
+  Beta  =   0.00000     qc/2V =   0.00000
+  Mach  =     0.000     rb/2V =  -0.00000     r'b/2V =  -0.00000
+
+  CXtot =  -0.03290     Cltot =  -0.00000     Cl'tot =  -0.00000
+  CYtot =   0.00000     Cmtot =   0.00000
+  CZtot =  -0.31164     Cntot =   0.00000     Cn'tot =   0.00000
+
+  CLtot =   0.31296
+  CDtot =   0.01612
+  CDvis =   0.01285     CDind =   0.00327
+  CLff  =   0.31276     CDff  =   0.00327    | Trefftz
+  CYff  =   0.00000         e =    0.5608    | Plane  
+
+   elevator        =   7.57570
+   rudder          =   0.00000
+
+   winc            =   2.50000
+   keelmiss        =   0.00000
+ ---------------------------------------------------------------
+
+ Stability-axis derivatives...
+
+                             alpha                beta
+                  ----------------    ----------------
+ z' force CL |    CLa =   5.805877    CLb =  -0.000000
+ y  force CY |    CYa =  -0.000000    CYb =  -1.633629
+ x' mom.  Cl'|    Cla =   0.000000    Clb =   0.651739
+ y  mom.  Cm |    Cma =  -3.098319    Cmb =  -0.000000
+ z' mom.  Cn'|    Cna =   0.000000    Cnb =  -0.050431
+
+                     roll rate  p'      pitch rate  q'        yaw rate  r'
+                  ----------------    ----------------    ----------------
+ z' force CL |    CLp =   0.000000    CLq =  29.088929    CLr =  -0.000000
+ y  force CY |    CYp =   1.342131    CYq =  -0.000000    CYr =   0.539601
+ x' mom.  Cl'|    Clp =  -1.180701    Clq =   0.000000    Clr =  -0.110914
+ y  mom.  Cm |    Cmp =   0.000000    Cmq =-168.833047    Cmr =   0.000000
+ z' mom.  Cn'|    Cnp =  -0.014429    Cnq =   0.000000    Cnr =  -0.648944
+
+                  elevator     d1     rudder       d2 
+                  ----------------    ----------------
+ z' force CL |   CLd1 =   0.005894   CLd2 =   0.000000
+ y  force CY |   CYd1 =   0.000000   CYd2 =  -0.001890
+ x' mom.  Cl'|   Cld1 =  -0.000000   Cld2 =   0.000781
+ y  mom.  Cm |   Cmd1 =   0.088250   Cmd2 =  -0.000000
+ z' mom.  Cn'|   Cnd1 =   0.000000   Cnd2 =  -0.004817
+ Trefftz drag| CDffd1 =   0.000429 CDffd2 =  -0.000000
+ span eff.   |    ed1 =  -0.052322    ed2 =   0.000000
+
+
+
+                  winc         g1     keelmiss     g2 
+                  ----------------    ----------------
+ z' force CL |   CLg1 =   0.095116   CLg2 =  -0.000000
+ y  force CY |   CYg1 =   0.000000   CYg2 =  -0.025789
+ x' mom.  Cl'|   Clg1 =  -0.000000   Clg2 =   0.010125
+ y  mom.  Cm |   Cmg1 =  -0.124146   Cmg2 =   0.000000
+ z' mom.  Cn'|   Cng1 =   0.000000   Cng2 =   0.004487
+ Trefftz drag| CDffg1 =   0.001088 CDffg2 =  -0.000000
+ span eff.   |    eg1 =   0.155805    eg2 =   0.000000
+
+
+
+ Neutral point  Xnp =  -0.064215
+
+ Clb Cnr / Clr Cnb  = -75.612405    (  > 1 if spirally stable )

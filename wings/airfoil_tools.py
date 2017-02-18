@@ -16,10 +16,10 @@ from glob import glob
 # User defined variables
 
 AIRFOIL_DB = os.environ['NEMO_ROOT']+"/dbfiles/subsistemas/airfoils"
-TCK_MIN = 0.06 # Minimum acceptable thickness
-TCK_MAX = 0.08 # Maximum acceptable thickness
-CBR_MIN = 0.035 # Minimum acceptable camber
-CBR_MAX = 0.045 # Maximum acceptable camber
+TCK_MIN = 0.016 # Minimum acceptable thickness
+TCK_MAX = 0.020 # Maximum acceptable thickness
+CBR_MIN = -0.01 # Minimum acceptable camber
+CBR_MAX = 0.005 # Maximum acceptable camber
 
 POLAR_HDR_NLINES = 12
 

@@ -1,0 +1,547 @@
+
+
+---------------------------------------------
+Run case  1:  V=3.30
+
+alpha        ->  alpha       =   -3.500000
+beta         ->  beta        =   0.00000    
+pb/2V        ->  pb/2V       =   0.00000    
+qc/2V        ->  qc/2V       =   0.00000    
+rb/2V        ->  rb/2V       =   0.00000    
+elevator     ->  elevator    =   9.000000
+rudder       ->  rudder      =   0.00000    
+
+alpha     =  -3.50000     deg                             
+beta      =   0.00000     deg                             
+pb/2V     =   0.00000                                     
+qc/2V     =   0.00000
+rb/2V     =   0.00000                                     
+CL        =   0.00000
+CDo       =   0.00000                                     
+bank      =   0.00000     deg                             
+elevation =   0.00000     deg                             
+heading   =   0.00000     deg                             
+Mach      =   0.00000                                     
+velocity  =   3.30000     Lunit/Tunit
+density   =   1020.00     Munit/Lunit^3
+grav.acc. =   9.80665    Lunit/Tunit^2
+turn_rad. =   0.00000     Lunit                           
+load_fac. =   1.00000                                     
+X_cg      =  -0.13345     Lunit                           
+Y_cg      =   0.00000     Lunit                           
+Z_cg      =   0.98500     Lunit                           
+mass      =   101.000     Munit                           
+Ixx       =   1.00000     Munit-Lunit^2                   
+Iyy       =   1.00000     Munit-Lunit^2                   
+Izz       =   1.00000     Munit-Lunit^2                   
+Ixy       =   0.00000     Munit-Lunit^2                   
+Iyz       =   0.00000     Munit-Lunit^2                   
+Izx       =   0.00000     Munit-Lunit^2                   
+visc CL_a =   0.00000                                     
+visc CL_u =   0.00000                                     
+visc CM_a =   0.00000                                     
+visc CM_u =   0.00000
+
+---------------------------------------------
+Run case  2:  V=3.60
+
+alpha        ->  alpha       =   -2.950000
+beta         ->  beta        =   0.00000    
+pb/2V        ->  pb/2V       =   0.00000    
+qc/2V        ->  qc/2V       =   0.00000    
+rb/2V        ->  rb/2V       =   0.00000    
+elevator     ->  elevator    =   9.000000
+rudder       ->  rudder      =   0.00000    
+
+alpha     =  -2.95000     deg                             
+beta      =   0.00000     deg                             
+pb/2V     =   0.00000                                     
+qc/2V     =   0.00000
+rb/2V     =   0.00000                                     
+CL        =   0.00000
+CDo       =   0.00000                                     
+bank      =   0.00000     deg                             
+elevation =   0.00000     deg                             
+heading   =   0.00000     deg                             
+Mach      =   0.00000                                     
+velocity  =   3.60000     Lunit/Tunit
+density   =   1020.00     Munit/Lunit^3
+grav.acc. =   9.80665    Lunit/Tunit^2
+turn_rad. =   0.00000     Lunit                           
+load_fac. =   1.00000                                     
+X_cg      =  -0.13345     Lunit                           
+Y_cg      =   0.00000     Lunit                           
+Z_cg      =   0.98500     Lunit                           
+mass      =   101.000     Munit                           
+Ixx       =   1.00000     Munit-Lunit^2                   
+Iyy       =   1.00000     Munit-Lunit^2                   
+Izz       =   1.00000     Munit-Lunit^2                   
+Ixy       =   0.00000     Munit-Lunit^2                   
+Iyz       =   0.00000     Munit-Lunit^2                   
+Izx       =   0.00000     Munit-Lunit^2                   
+visc CL_a =   0.00000                                     
+visc CL_u =   0.00000                                     
+visc CM_a =   0.00000                                     
+visc CM_u =   0.00000
+
+---------------------------------------------
+Run case  3:  V=3.90
+
+alpha        ->  alpha       =   -2.400000
+beta         ->  beta        =   0.00000    
+pb/2V        ->  pb/2V       =   0.00000    
+qc/2V        ->  qc/2V       =   0.00000    
+rb/2V        ->  rb/2V       =   0.00000    
+elevator     ->  elevator    =   9.000000
+rudder       ->  rudder      =   0.00000    
+
+alpha     =  -2.40000     deg                             
+beta      =   0.00000     deg                             
+pb/2V     =   0.00000                                     
+qc/2V     =   0.00000
+rb/2V     =   0.00000                                     
+CL        =   0.00000
+CDo       =   0.00000                                     
+bank      =   0.00000     deg                             
+elevation =   0.00000     deg                             
+heading   =   0.00000     deg                             
+Mach      =   0.00000                                     
+velocity  =   3.90000     Lunit/Tunit
+density   =   1020.00     Munit/Lunit^3
+grav.acc. =   9.80665    Lunit/Tunit^2
+turn_rad. =   0.00000     Lunit                           
+load_fac. =   1.00000                                     
+X_cg      =  -0.13345     Lunit                           
+Y_cg      =   0.00000     Lunit                           
+Z_cg      =   0.98500     Lunit                           
+mass      =   101.000     Munit                           
+Ixx       =   1.00000     Munit-Lunit^2                   
+Iyy       =   1.00000     Munit-Lunit^2                   
+Izz       =   1.00000     Munit-Lunit^2                   
+Ixy       =   0.00000     Munit-Lunit^2                   
+Iyz       =   0.00000     Munit-Lunit^2                   
+Izx       =   0.00000     Munit-Lunit^2                   
+visc CL_a =   0.00000                                     
+visc CL_u =   0.00000                                     
+visc CM_a =   0.00000                                     
+visc CM_u =   0.00000
+
+---------------------------------------------
+Run case  4:  V=4.20
+
+alpha        ->  alpha       =   -1.850000
+beta         ->  beta        =   0.00000    
+pb/2V        ->  pb/2V       =   0.00000    
+qc/2V        ->  qc/2V       =   0.00000    
+rb/2V        ->  rb/2V       =   0.00000    
+elevator     ->  elevator    =   9.000000
+rudder       ->  rudder      =   0.00000    
+
+alpha     =  -1.85000     deg                             
+beta      =   0.00000     deg                             
+pb/2V     =   0.00000                                     
+qc/2V     =   0.00000
+rb/2V     =   0.00000                                     
+CL        =   0.00000
+CDo       =   0.00000                                     
+bank      =   0.00000     deg                             
+elevation =   0.00000     deg                             
+heading   =   0.00000     deg                             
+Mach      =   0.00000                                     
+velocity  =   4.20000     Lunit/Tunit
+density   =   1020.00     Munit/Lunit^3
+grav.acc. =   9.80665    Lunit/Tunit^2
+turn_rad. =   0.00000     Lunit                           
+load_fac. =   1.00000                                     
+X_cg      =  -0.13345     Lunit                           
+Y_cg      =   0.00000     Lunit                           
+Z_cg      =   0.98500     Lunit                           
+mass      =   101.000     Munit                           
+Ixx       =   1.00000     Munit-Lunit^2                   
+Iyy       =   1.00000     Munit-Lunit^2                   
+Izz       =   1.00000     Munit-Lunit^2                   
+Ixy       =   0.00000     Munit-Lunit^2                   
+Iyz       =   0.00000     Munit-Lunit^2                   
+Izx       =   0.00000     Munit-Lunit^2                   
+visc CL_a =   0.00000                                     
+visc CL_u =   0.00000                                     
+visc CM_a =   0.00000                                     
+visc CM_u =   0.00000
+
+---------------------------------------------
+Run case  5:  V=4.50
+
+alpha        ->  alpha       =   -1.300000
+beta         ->  beta        =   0.00000    
+pb/2V        ->  pb/2V       =   0.00000    
+qc/2V        ->  qc/2V       =   0.00000    
+rb/2V        ->  rb/2V       =   0.00000    
+elevator     ->  elevator    =   9.000000
+rudder       ->  rudder      =   0.00000    
+
+alpha     =  -1.30000     deg                             
+beta      =   0.00000     deg                             
+pb/2V     =   0.00000                                     
+qc/2V     =   0.00000
+rb/2V     =   0.00000                                     
+CL        =   0.00000
+CDo       =   0.00000                                     
+bank      =   0.00000     deg                             
+elevation =   0.00000     deg                             
+heading   =   0.00000     deg                             
+Mach      =   0.00000                                     
+velocity  =   4.50000     Lunit/Tunit
+density   =   1020.00     Munit/Lunit^3
+grav.acc. =   9.80665    Lunit/Tunit^2
+turn_rad. =   0.00000     Lunit                           
+load_fac. =   1.00000                                     
+X_cg      =  -0.13345     Lunit                           
+Y_cg      =   0.00000     Lunit                           
+Z_cg      =   0.98500     Lunit                           
+mass      =   101.000     Munit                           
+Ixx       =   1.00000     Munit-Lunit^2                   
+Iyy       =   1.00000     Munit-Lunit^2                   
+Izz       =   1.00000     Munit-Lunit^2                   
+Ixy       =   0.00000     Munit-Lunit^2                   
+Iyz       =   0.00000     Munit-Lunit^2                   
+Izx       =   0.00000     Munit-Lunit^2                   
+visc CL_a =   0.00000                                     
+visc CL_u =   0.00000                                     
+visc CM_a =   0.00000                                     
+visc CM_u =   0.00000
+
+---------------------------------------------
+Run case  6:  V=4.80
+
+alpha        ->  alpha       =   -0.750000
+beta         ->  beta        =   0.00000    
+pb/2V        ->  pb/2V       =   0.00000    
+qc/2V        ->  qc/2V       =   0.00000    
+rb/2V        ->  rb/2V       =   0.00000    
+elevator     ->  elevator    =   9.000000
+rudder       ->  rudder      =   0.00000    
+
+alpha     =  -0.75000     deg                             
+beta      =   0.00000     deg                             
+pb/2V     =   0.00000                                     
+qc/2V     =   0.00000
+rb/2V     =   0.00000                                     
+CL        =   0.00000
+CDo       =   0.00000                                     
+bank      =   0.00000     deg                             
+elevation =   0.00000     deg                             
+heading   =   0.00000     deg                             
+Mach      =   0.00000                                     
+velocity  =   4.80000     Lunit/Tunit
+density   =   1020.00     Munit/Lunit^3
+grav.acc. =   9.80665    Lunit/Tunit^2
+turn_rad. =   0.00000     Lunit                           
+load_fac. =   1.00000                                     
+X_cg      =  -0.13345     Lunit                           
+Y_cg      =   0.00000     Lunit                           
+Z_cg      =   0.98500     Lunit                           
+mass      =   101.000     Munit                           
+Ixx       =   1.00000     Munit-Lunit^2                   
+Iyy       =   1.00000     Munit-Lunit^2                   
+Izz       =   1.00000     Munit-Lunit^2                   
+Ixy       =   0.00000     Munit-Lunit^2                   
+Iyz       =   0.00000     Munit-Lunit^2                   
+Izx       =   0.00000     Munit-Lunit^2                   
+visc CL_a =   0.00000                                     
+visc CL_u =   0.00000                                     
+visc CM_a =   0.00000                                     
+visc CM_u =   0.00000
+
+---------------------------------------------
+Run case  7:  V=5.10
+
+alpha        ->  alpha       =   -0.200000
+beta         ->  beta        =   0.00000    
+pb/2V        ->  pb/2V       =   0.00000    
+qc/2V        ->  qc/2V       =   0.00000    
+rb/2V        ->  rb/2V       =   0.00000    
+elevator     ->  elevator    =   9.000000
+rudder       ->  rudder      =   0.00000    
+
+alpha     =  -0.20000     deg                             
+beta      =   0.00000     deg                             
+pb/2V     =   0.00000                                     
+qc/2V     =   0.00000
+rb/2V     =   0.00000                                     
+CL        =   0.00000
+CDo       =   0.00000                                     
+bank      =   0.00000     deg                             
+elevation =   0.00000     deg                             
+heading   =   0.00000     deg                             
+Mach      =   0.00000                                     
+velocity  =   5.10000     Lunit/Tunit
+density   =   1020.00     Munit/Lunit^3
+grav.acc. =   9.80665    Lunit/Tunit^2
+turn_rad. =   0.00000     Lunit                           
+load_fac. =   1.00000                                     
+X_cg      =  -0.13345     Lunit                           
+Y_cg      =   0.00000     Lunit                           
+Z_cg      =   0.98500     Lunit                           
+mass      =   101.000     Munit                           
+Ixx       =   1.00000     Munit-Lunit^2                   
+Iyy       =   1.00000     Munit-Lunit^2                   
+Izz       =   1.00000     Munit-Lunit^2                   
+Ixy       =   0.00000     Munit-Lunit^2                   
+Iyz       =   0.00000     Munit-Lunit^2                   
+Izx       =   0.00000     Munit-Lunit^2                   
+visc CL_a =   0.00000                                     
+visc CL_u =   0.00000                                     
+visc CM_a =   0.00000                                     
+visc CM_u =   0.00000
+
+---------------------------------------------
+Run case  8:  V=5.40
+
+alpha        ->  alpha       =   0.350000
+beta         ->  beta        =   0.00000    
+pb/2V        ->  pb/2V       =   0.00000    
+qc/2V        ->  qc/2V       =   0.00000    
+rb/2V        ->  rb/2V       =   0.00000    
+elevator     ->  elevator    =   9.000000
+rudder       ->  rudder      =   0.00000    
+
+alpha     =   0.35000     deg                             
+beta      =   0.00000     deg                             
+pb/2V     =   0.00000                                     
+qc/2V     =   0.00000
+rb/2V     =   0.00000                                     
+CL        =   0.00000
+CDo       =   0.00000                                     
+bank      =   0.00000     deg                             
+elevation =   0.00000     deg                             
+heading   =   0.00000     deg                             
+Mach      =   0.00000                                     
+velocity  =   5.40000     Lunit/Tunit
+density   =   1020.00     Munit/Lunit^3
+grav.acc. =   9.80665    Lunit/Tunit^2
+turn_rad. =   0.00000     Lunit                           
+load_fac. =   1.00000                                     
+X_cg      =  -0.13345     Lunit                           
+Y_cg      =   0.00000     Lunit                           
+Z_cg      =   0.98500     Lunit                           
+mass      =   101.000     Munit                           
+Ixx       =   1.00000     Munit-Lunit^2                   
+Iyy       =   1.00000     Munit-Lunit^2                   
+Izz       =   1.00000     Munit-Lunit^2                   
+Ixy       =   0.00000     Munit-Lunit^2                   
+Iyz       =   0.00000     Munit-Lunit^2                   
+Izx       =   0.00000     Munit-Lunit^2                   
+visc CL_a =   0.00000                                     
+visc CL_u =   0.00000                                     
+visc CM_a =   0.00000                                     
+visc CM_u =   0.00000
+
+---------------------------------------------
+Run case  9:  V=5.70
+
+alpha        ->  alpha       =   0.900000
+beta         ->  beta        =   0.00000    
+pb/2V        ->  pb/2V       =   0.00000    
+qc/2V        ->  qc/2V       =   0.00000    
+rb/2V        ->  rb/2V       =   0.00000    
+elevator     ->  elevator    =   9.000000
+rudder       ->  rudder      =   0.00000    
+
+alpha     =   0.90000     deg                             
+beta      =   0.00000     deg                             
+pb/2V     =   0.00000                                     
+qc/2V     =   0.00000
+rb/2V     =   0.00000                                     
+CL        =   0.00000
+CDo       =   0.00000                                     
+bank      =   0.00000     deg                             
+elevation =   0.00000     deg                             
+heading   =   0.00000     deg                             
+Mach      =   0.00000                                     
+velocity  =   5.70000     Lunit/Tunit
+density   =   1020.00     Munit/Lunit^3
+grav.acc. =   9.80665    Lunit/Tunit^2
+turn_rad. =   0.00000     Lunit                           
+load_fac. =   1.00000                                     
+X_cg      =  -0.13345     Lunit                           
+Y_cg      =   0.00000     Lunit                           
+Z_cg      =   0.98500     Lunit                           
+mass      =   101.000     Munit                           
+Ixx       =   1.00000     Munit-Lunit^2                   
+Iyy       =   1.00000     Munit-Lunit^2                   
+Izz       =   1.00000     Munit-Lunit^2                   
+Ixy       =   0.00000     Munit-Lunit^2                   
+Iyz       =   0.00000     Munit-Lunit^2                   
+Izx       =   0.00000     Munit-Lunit^2                   
+visc CL_a =   0.00000                                     
+visc CL_u =   0.00000                                     
+visc CM_a =   0.00000                                     
+visc CM_u =   0.00000
+
+---------------------------------------------
+Run case  10:  V=6.00
+
+alpha        ->  alpha       =   1.450000
+beta         ->  beta        =   0.00000    
+pb/2V        ->  pb/2V       =   0.00000    
+qc/2V        ->  qc/2V       =   0.00000    
+rb/2V        ->  rb/2V       =   0.00000    
+elevator     ->  elevator    =   9.000000
+rudder       ->  rudder      =   0.00000    
+
+alpha     =   1.45000     deg                             
+beta      =   0.00000     deg                             
+pb/2V     =   0.00000                                     
+qc/2V     =   0.00000
+rb/2V     =   0.00000                                     
+CL        =   0.00000
+CDo       =   0.00000                                     
+bank      =   0.00000     deg                             
+elevation =   0.00000     deg                             
+heading   =   0.00000     deg                             
+Mach      =   0.00000                                     
+velocity  =   6.00000     Lunit/Tunit
+density   =   1020.00     Munit/Lunit^3
+grav.acc. =   9.80665    Lunit/Tunit^2
+turn_rad. =   0.00000     Lunit                           
+load_fac. =   1.00000                                     
+X_cg      =  -0.13345     Lunit                           
+Y_cg      =   0.00000     Lunit                           
+Z_cg      =   0.98500     Lunit                           
+mass      =   101.000     Munit                           
+Ixx       =   1.00000     Munit-Lunit^2                   
+Iyy       =   1.00000     Munit-Lunit^2                   
+Izz       =   1.00000     Munit-Lunit^2                   
+Ixy       =   0.00000     Munit-Lunit^2                   
+Iyz       =   0.00000     Munit-Lunit^2                   
+Izx       =   0.00000     Munit-Lunit^2                   
+visc CL_a =   0.00000                                     
+visc CL_u =   0.00000                                     
+visc CM_a =   0.00000                                     
+visc CM_u =   0.00000
+
+---------------------------------------------
+Run case  11:  V=6.30
+
+alpha        ->  alpha       =   2.000000
+beta         ->  beta        =   0.00000    
+pb/2V        ->  pb/2V       =   0.00000    
+qc/2V        ->  qc/2V       =   0.00000    
+rb/2V        ->  rb/2V       =   0.00000    
+elevator     ->  elevator    =   9.000000
+rudder       ->  rudder      =   0.00000    
+
+alpha     =   2.00000     deg                             
+beta      =   0.00000     deg                             
+pb/2V     =   0.00000                                     
+qc/2V     =   0.00000
+rb/2V     =   0.00000                                     
+CL        =   0.00000
+CDo       =   0.00000                                     
+bank      =   0.00000     deg                             
+elevation =   0.00000     deg                             
+heading   =   0.00000     deg                             
+Mach      =   0.00000                                     
+velocity  =   6.30000     Lunit/Tunit
+density   =   1020.00     Munit/Lunit^3
+grav.acc. =   9.80665    Lunit/Tunit^2
+turn_rad. =   0.00000     Lunit                           
+load_fac. =   1.00000                                     
+X_cg      =  -0.13345     Lunit                           
+Y_cg      =   0.00000     Lunit                           
+Z_cg      =   0.98500     Lunit                           
+mass      =   101.000     Munit                           
+Ixx       =   1.00000     Munit-Lunit^2                   
+Iyy       =   1.00000     Munit-Lunit^2                   
+Izz       =   1.00000     Munit-Lunit^2                   
+Ixy       =   0.00000     Munit-Lunit^2                   
+Iyz       =   0.00000     Munit-Lunit^2                   
+Izx       =   0.00000     Munit-Lunit^2                   
+visc CL_a =   0.00000                                     
+visc CL_u =   0.00000                                     
+visc CM_a =   0.00000                                     
+visc CM_u =   0.00000
+
+---------------------------------------------
+Run case  12:  V=6.60
+
+alpha        ->  alpha       =   2.550000
+beta         ->  beta        =   0.00000    
+pb/2V        ->  pb/2V       =   0.00000    
+qc/2V        ->  qc/2V       =   0.00000    
+rb/2V        ->  rb/2V       =   0.00000    
+elevator     ->  elevator    =   9.000000
+rudder       ->  rudder      =   0.00000    
+
+alpha     =   2.55000     deg                             
+beta      =   0.00000     deg                             
+pb/2V     =   0.00000                                     
+qc/2V     =   0.00000
+rb/2V     =   0.00000                                     
+CL        =   0.00000
+CDo       =   0.00000                                     
+bank      =   0.00000     deg                             
+elevation =   0.00000     deg                             
+heading   =   0.00000     deg                             
+Mach      =   0.00000                                     
+velocity  =   6.60000     Lunit/Tunit
+density   =   1020.00     Munit/Lunit^3
+grav.acc. =   9.80665    Lunit/Tunit^2
+turn_rad. =   0.00000     Lunit                           
+load_fac. =   1.00000                                     
+X_cg      =  -0.13345     Lunit                           
+Y_cg      =   0.00000     Lunit                           
+Z_cg      =   0.98500     Lunit                           
+mass      =   101.000     Munit                           
+Ixx       =   1.00000     Munit-Lunit^2                   
+Iyy       =   1.00000     Munit-Lunit^2                   
+Izz       =   1.00000     Munit-Lunit^2                   
+Ixy       =   0.00000     Munit-Lunit^2                   
+Iyz       =   0.00000     Munit-Lunit^2                   
+Izx       =   0.00000     Munit-Lunit^2                   
+visc CL_a =   0.00000                                     
+visc CL_u =   0.00000                                     
+visc CM_a =   0.00000                                     
+visc CM_u =   0.00000
+
+---------------------------------------------
+Run case  13:  V=6.90
+
+alpha        ->  alpha       =   3.100000
+beta         ->  beta        =   0.00000    
+pb/2V        ->  pb/2V       =   0.00000    
+qc/2V        ->  qc/2V       =   0.00000    
+rb/2V        ->  rb/2V       =   0.00000    
+elevator     ->  elevator    =   9.000000
+rudder       ->  rudder      =   0.00000    
+
+alpha     =   3.10000     deg                             
+beta      =   0.00000     deg                             
+pb/2V     =   0.00000                                     
+qc/2V     =   0.00000
+rb/2V     =   0.00000                                     
+CL        =   0.00000
+CDo       =   0.00000                                     
+bank      =   0.00000     deg                             
+elevation =   0.00000     deg                             
+heading   =   0.00000     deg                             
+Mach      =   0.00000                                     
+velocity  =   6.90000     Lunit/Tunit
+density   =   1020.00     Munit/Lunit^3
+grav.acc. =   9.80665    Lunit/Tunit^2
+turn_rad. =   0.00000     Lunit                           
+load_fac. =   1.00000                                     
+X_cg      =  -0.13345     Lunit                           
+Y_cg      =   0.00000     Lunit                           
+Z_cg      =   0.98500     Lunit                           
+mass      =   101.000     Munit                           
+Ixx       =   1.00000     Munit-Lunit^2                   
+Iyy       =   1.00000     Munit-Lunit^2                   
+Izz       =   1.00000     Munit-Lunit^2                   
+Ixy       =   0.00000     Munit-Lunit^2                   
+Iyz       =   0.00000     Munit-Lunit^2                   
+Izx       =   0.00000     Munit-Lunit^2                   
+visc CL_a =   0.00000                                     
+visc CL_u =   0.00000                                     
+visc CM_a =   0.00000                                     
+visc CM_u =   0.00000

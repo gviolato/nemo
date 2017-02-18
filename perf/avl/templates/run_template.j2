@@ -1,0 +1,46 @@
+{% macro runcase(case) -%}
+---------------------------------------------
+Run case  {{ case.id  }}:  {{ case.name  }}
+
+alpha        ->  CL          =   {{ '%.6f' % case.cl  }}    
+beta         ->  beta        =   0.00000    
+pb/2V        ->  pb/2V       =   0.00000    
+qc/2V        ->  qc/2V       =   0.00000    
+rb/2V        ->  rb/2V       =   0.00000    
+elevator     ->  Cm pitchmom =   {{ '%.6f' % case.cm  }}
+rudder       ->  rudder      =   0.00000    
+
+alpha     ={{ '%10.5f' % case.alpha  }}     deg                             
+beta      =   0.00000     deg                             
+pb/2V     =   0.00000                                     
+qc/2V     =   0.00000
+rb/2V     =   0.00000                                     
+CL        ={{ '%10.5f' % case.cl  }}
+CDo       =   0.00000                                     
+bank      =   0.00000     deg                             
+elevation =   0.00000     deg                             
+heading   =   0.00000     deg                             
+Mach      =   0.00000                                     
+velocity  ={{ '%10.5f' % case.vel  }}     Lunit/Tunit
+density   ={{ '%10.2f' % case.rho  }}     Munit/Lunit^3
+grav.acc. ={{ '%10.5f' % case.grav  }}    Lunit/Tunit^2
+turn_rad. =   0.00000     Lunit                           
+load_fac. =   1.00000                                     
+X_cg      ={{ '%10.5f' % case.x_cg  }}     Lunit                           
+Y_cg      =   0.00000     Lunit                           
+Z_cg      ={{ '%10.5f' % case.z_cg  }}     Lunit                           
+mass      ={{ '%10.3f' % case.mass  }}     Munit                           
+Ixx       =   1.00000     Munit-Lunit^2                   
+Iyy       =   1.00000     Munit-Lunit^2                   
+Izz       =   1.00000     Munit-Lunit^2                   
+Ixy       =   0.00000     Munit-Lunit^2                   
+Iyz       =   0.00000     Munit-Lunit^2                   
+Izx       =   0.00000     Munit-Lunit^2                   
+visc CL_a =   0.00000                                     
+visc CL_u =   0.00000                                     
+visc CM_a =   0.00000                                     
+visc CM_u =   0.00000                                     
+{%- endmacro %}
+{% for case in runcases %}
+{{ runcase(case) }}
+{% endfor %}

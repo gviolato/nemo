@@ -1,0 +1,138 @@
+Nemo Human Powered Hydrofoil. Wing (1.80 x 17)
+#Mach
+ 0.0    
+#IYsym   IZsym   Zsym
+ 0       0       0.0
+#Sref    Cref    Bref
+0.191   0.111    1.8
+#Xref    Yref    Zref
+-0.083   0.0    0.985
+#CDp
+0.000
+#
+#====================================================================
+SURFACE 
+Wing 
+#Nchordwise  Cspace   Nspanwise   Sspace
+16           1.0      24          -2.0
+#
+YDUPLICATE
+0.0
+#-------------------------------------------------------------
+# Wing Root -------
+SECTION
+#Xle    Yle    Zle     Chord   Ainc  Nspanwise  Sspace
+0.      0.     0.      0.146     0.0   0          0
+AFILE
+gv03.dat
+CLAF
+0.9987
+CDCL
+0.2 0.00775 0.325 0.0067 1.0 0.0106
+DESIGN
+winc 1.0
+#-------------------------------------------------------------
+# Wing Tip -------
+SECTION
+#Xle    Yle    Zle     Chord   Ainc  Nspanwise  Sspace
+0.02    0.9    0.0     0.066   0.0   0          0
+AFILE
+gv03.dat
+CLAF
+0.9987
+CDCL
+0.2 0.00775 0.325 0.0067 1.0 0.0106
+DESIGN
+winc 1.0
+#====================================================================
+SURFACE
+Quilha
+#Nchordwise  Cspace   Nspanwise   Sspace
+ 8           1.0      12           1.0
+#
+TRANSLATE
+0.15 0.0 0.05
+#
+#-------------------------------------------------------------
+SECTION
+#Xle    Yle    Zle     Chord   Ainc  Nspanwise  Sspace
+0.0     0.0    0.0     0.187     0.    0          0
+CLAF
+1.015
+CDCL
+-0.948 0.01355 0. 0.007 0.948 0.01355
+DESIGN
+keelmiss 1.0
+#-------------------------------------------------------------
+SECTION
+#Xle    Yle    Zle     Chord   Ainc  Nspanwise  Sspace
+0.0     0.0    0.5     0.187    0.    0          0
+CLAF
+1.015
+CDCL
+-0.948 0.01355 0. 0.007 0.948 0.01355
+DESIGN
+keelmiss 1.0
+#====================================================================
+SURFACE
+Canard
+#Nchordwise  Cspace    Nspanwise  Sspace
+16           1.0       16         1.0
+#
+YDUPLICATE
+0.0
+#
+TRANSLATE 
+-1.515 0.0 0.25
+#-------------------------------------------------------------
+SECTION
+#Xle    Yle    Zle     Chord   Ainc  Nspanwise  Sspace
+0.0     0.     0.0     0.051     0.    0          0
+AFILE
+s4310.dat
+CLAF
+0.953
+CDCL
+0.2 0.01792 0.4 0.01406 1.15 0.01643
+#Cname   Cgain  Xhinge  HingeVec     SgnDup
+CONTROL
+elevator 1.0    0.      0.0 1.0 0.0  1.0
+#-------------------------------------------------------------
+SECTION
+#Xle    Yle    Zle     Chord   Ainc  Nspanwise  Sspace
+0.      0.177  0.0     0.051    0.    0          0
+AFILE
+s4310.dat
+CLAF
+0.941
+CDCL
+0.2 0.01792 0.4 0.01406 1.15 0.01643
+#Cname   Cgain  Xhinge  HingeVec     SgnDup
+CONTROL
+elevator 1.0    0.      0.0 1.0 0.0  1.0
+#====================================================================
+SURFACE
+Leme
+#Nchordwise  Cspace    Nspanwise  Sspace
+10           1.0       10         1.0
+TRANSLATE 
+-1.519 0.0 0.25
+#-------------------------------------------------------------
+SECTION
+#Xle    Yle    Zle     Chord   Ainc  Nspanwise  Sspace
+0.0     0.     0.0     0.06     0.    0          0
+CDCL
+-1.0 0.01468 0. 0.00685 1.0 0.01468
+#Cname   Cgain  Xhinge  HingeVec     SgnDup
+CONTROL
+rudder   1.0    0.5     0.0 0.0 1.0  1.0
+#-------------------------------------------------------------
+SECTION
+#Xle    Yle    Zle     Chord   Ainc  Nspanwise  Sspace
+0.     0.      0.30     0.06    0.    0          0
+CDCL
+-1.0 0.01468 0. 0.00685 1.0 0.01468
+#Cname   Cgain  Xhinge  HingeVec     SgnDup
+CONTROL
+rudder   1.0    0.5     0.0 1.0 0.0  1.0
+#-------------------------------------------------------------

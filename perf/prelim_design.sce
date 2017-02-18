@@ -20,7 +20,7 @@ FT2M = 0.3048;    // feet to meter
 
 // Riders parameters
 gustavo.mass = 87;
-gustavo.pwr  = 215;
+gustavo.pwr  = 250;
 gustavo.name = "Gustavo";
 
 fernando.mass = 88;
@@ -32,8 +32,8 @@ diego.pwr = 275;
 diego.name = "Diego";
 
 // Chosen wing dimensions
-prj_span = 2.0;    // [m]
-prj_aspect = 18;    // [m]
+prj_span = 1.8;    // [m]
+prj_aspect = 17;    // [m]
 
 // Rider
 rider = gustavo;
@@ -41,10 +41,10 @@ rider = gustavo;
 // User defined variables
 rho_w    = 1000;    // density of water 16C        [kg/m^3]
 rho_a    = 1.225;  // density of air 15C           [kg/m^3]
-CL_max_w = 1.2;    // max wing lift coeff          [-]
+CL_max_w = 1.1;    // max wing lift coeff          [-]
 mass_hph = 15;     // vehicle mass                 [kg]
-tc_w     = 0.13;   // wing thickness ratio         [-]
-lambda_w = 0.4;    // wing taper ratio             [-]
+tc_w     = 0.12;   // wing thickness ratio         [-]
+lambda_w = 0.45;    // wing taper ratio             [-]
 eff_prop = 0.85;   // propeller efficiency         [-]
 eff_mech = 0.95;   // mechanical drivetrain efficiency
 f_i      = 1.48;   // induced drag factor          [-]
@@ -313,7 +313,7 @@ if DO_PLOTS
   // Wing Plot
   cr = PlotWing(prj_aspect,prj_span,lambda_w);
   
-  // Drag buil-up @ 5m/s
+  // Drag build-up @ 5m/s
   mass_tot = rider.mass + mass_hph;
   e = 1/(1+0.025);
   q = 0.5*rho_w*5^2;

@@ -1,0 +1,35 @@
+ ---------------------------------------------------------------
+ Vortex Lattice Output -- Total Forces
+
+ Configuration: Nemo Human Powered Hydrofoil. Wing (1.80 x 17)              
+     # Surfaces =   6
+     # Strips   = 102
+     # Vortices =1476
+
+  Sref = 0.19100       Cref = 0.11100       Bref =  1.8000    
+  Xref =-0.13345       Yref =  0.0000       Zref = 0.98500    
+
+ Standard axis orientation,  X fwd, Z down         
+
+ Run case: V=4.80                                  
+
+  Alpha =  -0.75000     pb/2V =  -0.00000     p'b/2V =  -0.00000
+  Beta  =   0.00000     qc/2V =   0.00000
+  Mach  =     0.000     rb/2V =  -0.00000     r'b/2V =  -0.00000
+
+  CXtot =  -0.02517     Cltot =  -0.00000     Cl'tot =  -0.00000
+  CYtot =   0.00000     Cmtot =  -0.50248
+  CZtot =  -0.52101     Cntot =   0.00000     Cn'tot =   0.00000
+
+  CLtot =   0.52129
+  CDtot =   0.01835
+  CDvis =   0.01253     CDind =   0.00582
+  CLff  =   0.52120     CDff  =   0.00582    | Trefftz
+  CYff  =   0.00000         e =    0.8765    | Plane  
+
+   elevator        =   3.00000
+   rudder          =   0.00000
+
+   winc            =   2.50000
+   keelmiss        =   0.00000
+ ---------------------------------------------------------------

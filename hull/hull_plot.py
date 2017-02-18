@@ -31,8 +31,8 @@ def plot_scene(shape,w,angles,position,cgPos_e):
     ax = fig.gca(projection='3d')
     # Calculate buoy shape coordinates in its intrinsic coordinate
     # system
-    csB_coords_b = geo.getShapePoints(shape,'bottom',25)
-    csT_coords_b = geo.getShapePoints(shape,'top',25)
+    csB_coords_b = geo.getShapePoints(shape,'bottom',35)
+    csT_coords_b = geo.getShapePoints(shape,'top',35)
 
     # Calculate rotated and translated coordinates for left and right
     # buoys

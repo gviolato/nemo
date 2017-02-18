@@ -17,6 +17,7 @@ PWR_INPUT = 300*0.95 # Available power after drive train [W]
 RHO_H20   = 999      # Water density [kg/m^3]
 SPEED     = 5.       # Cruise Speed [m/s]
 DES_EFF   = 0.99     # Desired efficiency
+
 def D_from_Eff(eff):
     return np.sqrt(2*PWR_INPUT/(np.pi*RHO_H20*
                                 np.multiply(1-eff,np.power(SPEED/eff,3))))

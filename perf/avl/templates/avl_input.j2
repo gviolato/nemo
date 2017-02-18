@@ -1,0 +1,19 @@
+{% macro execcase(case) -%}
+{{ case.id }}
+X
+FT
+./results/case_{{ case.id }}_FT.out
+FN
+./results/case_{{ case.id }}_FN.out
+ST
+./results/case_{{ case.id }}_ST.out
+{%- endmacro %}
+OPER
+DE
+1 {{ vars.iw }}
+
+{% for case in vars.runcases %}
+{{ execcase(case) }}
+{% endfor %}
+
+QUIT
