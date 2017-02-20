@@ -42,7 +42,8 @@ if __name__=="__main__":
                                  shape.length,shape.cap,
                                  shape.waterline,shape.top, 40)
         cs = np.hstack((cs_b,cs_t[:,-2::-1]))*1000
-        np.savetxt('./cross_sections/cs_{:02d}.dat'.format(i),cs.T,
-                   delimiter=',',fmt='%.5f',header='HULL SECTION {}'.format(i))
+        cs = np.vstack((cs,station*1000*np.ones((1,cs.shape[1]))))
+        np.savetxt('./cross_sections/cs_{:02d}.sldcrv'.format(i),cs.T,
+                   delimiter=' ',fmt='%.5f')#,header='HULL SECTION {}'.format(i))
 
-    np.savetxt('./cross_sections/offsets.dat',np.array(STTS)*1000,fmt='%.3f')
+    #np.savetxt('./cross_sections/offsets.dat',np.array(STTS)*1000,fmt='%.3f')
