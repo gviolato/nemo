@@ -1,0 +1,1 @@
+HOR, HS1, ARAD, EPPLER85X (X=[0,8]), [MH112->MH122] (quanto menor mais próximo da raiz) sommers

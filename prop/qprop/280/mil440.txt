@@ -1,0 +1,29 @@
+Nemo MIL Input                                            
+                                                
+2      ! Nblades                                  
+                                                
+0.432071718    6.352673352            ! CL0     CL_a                                
+-0.0055    1.15            ! CLmin   Clmax                                
+                                                
+0.01214    0.019638731    0.039269672    0.5158    !  CD0    CD2u   CD2l   CLCD0                                
+100000    -0.5            !  REref  Reexp                                   
+
+0.7 ! Xldes (r/R locations where design cl is specified)
+
+0.8905 ! (specified Cl)
+
+0.015 ! hub ratius (m)
+
+0.22 ! tip radius (m), propeller menor
+
+3.5 ! speed (m/s)
+
+243 ! rpm
+
+0 ! Thrust (N)
+
+235 ! Power (W) 0 if thrust specified (250*0,94 de eff)
+
+0 0 ! Ldes KQdes
+
+10 ! Nout (number of output stations)

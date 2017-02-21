@@ -1,0 +1,53 @@
+Single point
+
+qprop nemo_300_mod.txt qany.txt 1.0 530 > nemo_300_mod_res-1.txt
+qprop nemo_300_mod.txt qany.txt 2.0 530 > nemo_300_mod_res-2.txt
+qprop nemo_300_mod.txt qany.txt 3.0 521 > nemo_300_mod_res-3.txt
+qprop nemo_300_mod.txt qany.txt 4.0 490 > nemo_300_mod_res-4.txt
+qprop nemo_300_mod.txt qany.txt 5.0 504 > nemo_300_mod_res-5.txt
+qprop nemo_300_mod.txt qany.txt 6.0 530 > nemo_300_mod_res-6.txt
+
+
+qprop nbe340mod.txt qany.txt 4.0 486 > nbe340mod_res-4p.txt
+
+
+Multi point
+
+qprop nbe340mod4.txt qany.txt 0.0,8.0/33 321.79 > nbe340mod4_res.txt
+qprop nbe340mod4.txt qany.txt 1.0 454.29 > nbe340mod4_res-1.txt
+qprop nbe340mod4.txt qany.txt 2.0 454.29 > nbe340mod4_res-2.txt
+qprop nbe340mod4.txt qany.txt 3.0 454.29 > nbe340mod4_res-3.txt
+qprop nbe340mod4.txt qany.txt 4.0 454.29 > nbe340mod4_res-4.txt
+qprop nbe340mod4.txt qany.txt 5.0 454.29 > nbe340mod4_res-5.txt
+qprop nbe340mod4.txt qany.txt 6.0 454.29 > nbe340mod4_res-6.txt
+
+
+
+qprop 280.txt qany.txt 3.0 545.45 > 280_res-3m.txt
+
+qprop 300.txt qany.txt 0.0,8.0/33 354.17 > 300_res.txt
+qprop 300.txt qany.txt 3.0 500 > 300_res-3m.txt
+
+qprop 320.txt qany.txt 0.0,8.0/33 340 > 320_res.txt
+qprop 320.txt qany.txt 3.0 480 > 320_res-3m.txt
+
+qprop 340.txt qany.txt 0.0,8.0/33 321.79 > 340_res.txt
+qprop 340.txt qany.txt 3.0 454.29 > 340_res-3m.txt
+
+
+
+
+QMIL
+
+qmil mil280.txt > mil280_res.txt
+qmil mil300.txt > mil300_res.txt
+qmil mil320.txt > mil320_res.txt
+qmil mil340.txt > mil340_res.txt
+
+
+qprop mil300v2_res.txt qany.txt 0.0,8.0/33 375.4 > mil300v2_res_qprop.txt
+
+
+
+
+qprop nbe400sized.txt qany.txt 0.0,8.0/33 375.4 > nbe400sized_res.txt
