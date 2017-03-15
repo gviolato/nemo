@@ -11,6 +11,3 @@ geometry:
 
 polars:
   be50: 'be50_Re1e5.pol'
-  hs1430: 'hs1430_Re5e4.pol'
-  hs1712: 'hs1712_Re5e4.pol'
-  hs1620: 'hs1620_Re5e4.pol'
