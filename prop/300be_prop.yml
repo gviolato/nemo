@@ -1,5 +1,6 @@
 # Prop file
 general:
+  name: 'be50_340mm_pit'
   B: 2
   D: 0.34
 

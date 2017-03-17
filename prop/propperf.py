@@ -12,6 +12,9 @@ import os, sys
 import re
 import itertools
 import yaml
+from glob import glob
+import argparse
+
 import numpy as np
 from scipy import integrate
 import matplotlib.pyplot as plt
@@ -26,8 +29,13 @@ TOL = 1e-4
 ALPHA = 0.5
 RPM2RPS = np.pi/30.
 
-PROP_FILE = '300be_prop.yml'
 RUN_FILE  = 'runs.yml'
+
+# Comand line arguments
+parser = argparse.ArgumentParser()
+parser.add_argument("-r", "--runfile",
+                    help="YAML file with info on how "
+                    "to run calculations", default = RUN_FILE)
 
 # Auxiliary classes
 
@@ -63,7 +71,28 @@ class propfoil(ap.Airfoil):
         
 
 # Auxiliary functions
+def get_propinfo(propfile):
+    with open(propfile,'r') as fid:
+        propinfo = yaml.load(fid.read())
 
+    prop = dict()
+    prop.update(propinfo['general'])
+    prop.update(propinfo['geometry'])
+    for i,foil in enumerate(prop['airfoils']):
+        pol_dict = propinfo['polars']
+        foil_name = prop['airfoils'][i]
+        prop['airfoils'][i] = propfoil([pol_dict[foil_name]])
+
+    return prop, propinfo['general']['name']
+
+def prepare_propdir(propname, erase=False):
+    if os.path.isdir(propname):
+        if erase:
+            for f in glob(os.path.join(propname,'*.out')):
+                os.remove(f)
+    else:
+        os.mkdir(propname)
+    
 def lookup(filename,xvar):
     matrix = np.loadtxt(filename,delimiter=',')
     return np.interp(xvar,matrix[:,0],matrix[:,1])
@@ -174,24 +203,25 @@ def calc_perf(prop, op):
 
 # Program execution
 if __name__=="__main__":
-    with open(PROP_FILE,'r') as fid:
-        propinfo = yaml.load(fid.read())
-
-    prop = dict()
-    prop.update(propinfo['general'])
-    prop.update(propinfo['geometry'])
-    for i,foil in enumerate(prop['airfoils']):
-        pol_dict = propinfo['polars']
-        foil_name = prop['airfoils'][i]
-        prop['airfoils'][i] = propfoil([pol_dict[foil_name]])
-
-    with open(RUN_FILE,'r') as fid:
+    args = parser.parse_args()
+    
+    with open(args.runfile,'r') as fid:
         runinfo = yaml.load(fid.read())
 
-    
+    PROPSRAN = []
     for runname, op in runinfo.iteritems():
-        with open('{}.out'.format(runname),'w') as fid:
-            fid.write('# Results for prop {}:\n'.format(PROP_FILE))
+        
+        prop, propname = get_propinfo(op['PROPFILE'])
+        
+        if propname not in PROPSRAN:
+            prepare_propdir(propname, erase=True)
+            PROPSRAN.append(propname)
+        else:
+            prepare_propdir(propname)
+        
+        resfile = os.path.join(propname,'{}.out'.format(runname))
+        with open(resfile,'w') as fid:
+            fid.write('# Results for prop {}:\n'.format(propname))
             fid.write('# Water density was {:.1f} kg*m^-3\n'.format(op['RHO']))
             fid.write('V,RPM,T,Q,pwr,eff,J,dist_file\n')
 
@@ -220,10 +250,11 @@ if __name__=="__main__":
 
             dist_file_name = '{}_dist_{}.out'.format(runname,
                                                      idx)
-            np.savetxt(dist_file_name,perf_dist,delimiter=',',
+            dist_file_path = os.path.join(propname,dist_file_name)
+            np.savetxt(dist_file_path,perf_dist,delimiter=',',
                        header='r,cl,cd,a,al,phi,alpha')
 
-            with open('{}.out'.format(runname),'a') as fid:
+            with open(resfile,'a') as fid:
                 fid.write('{:.3f},{:.1f},{:.3f},{:.3f},'\
                           '{:.3f},{:.5f},{:.3f},{}\n'.format(op['V'],
                                                              op['RPM'],
