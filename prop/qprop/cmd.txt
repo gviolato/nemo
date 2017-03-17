@@ -1,21 +1,21 @@
 MULTI POINT
 SINGLE POINT
 
-qprop prop.txt qany.txt 0.0,7.0/29 900 > prop_res_900_all.txt
-qprop prop.txt qany.txt 0.0 900 > prop_res_900-00.txt
-qprop prop.txt qany.txt 0.5 900 > prop_res_900-05.txt
-qprop prop.txt qany.txt 1.0 900 > prop_res_900-10.txt
-qprop prop.txt qany.txt 1.5 900 > prop_res_900-15.txt
-qprop prop.txt qany.txt 2.0 900 > prop_res_900-20.txt
-qprop prop.txt qany.txt 2.5 900 > prop_res_900-25.txt
-qprop prop.txt qany.txt 3.0 900 > prop_res_900-30.txt
-qprop prop.txt qany.txt 3.5 900 > prop_res_900-35.txt
-qprop prop.txt qany.txt 4.0 900 > prop_res_900-40.txt
-qprop prop.txt qany.txt 4.5 900 > prop_res_900-45.txt
-qprop prop.txt qany.txt 5.0 900 > prop_res_900-50.txt
-qprop prop.txt qany.txt 5.5 900 > prop_res_900-55.txt
-qprop prop.txt qany.txt 6.0 900 > prop_res_900-60.txt
-qprop prop.txt qany.txt 6.5 900 > prop_res_900-65.txt
+qprop prop.txt qany.txt 0.0,7.0/29 691 > prop_res_691_all.txt
+qprop prop.txt qany.txt 0.0 691 > prop_res_691-00.txt
+qprop prop.txt qany.txt 0.5 691 > prop_res_691-05.txt
+qprop prop.txt qany.txt 1.0 691 > prop_res_691-10.txt
+qprop prop.txt qany.txt 1.5 691 > prop_res_691-15.txt
+qprop prop.txt qany.txt 2.0 691 > prop_res_691-20.txt
+qprop prop.txt qany.txt 2.5 691 > prop_res_691-25.txt
+qprop prop.txt qany.txt 3.0 691 > prop_res_691-30.txt
+qprop prop.txt qany.txt 3.5 691 > prop_res_691-35.txt
+qprop prop.txt qany.txt 4.0 691 > prop_res_691-40.txt
+qprop prop.txt qany.txt 4.5 691 > prop_res_691-45.txt
+qprop prop.txt qany.txt 5.0 691 > prop_res_691-50.txt
+qprop prop.txt qany.txt 5.5 691 > prop_res_691-55.txt
+qprop prop.txt qany.txt 6.0 691 > prop_res_691-60.txt
+qprop prop.txt qany.txt 6.5 691 > prop_res_691-65.txt
 
 
 qprop prop.txt qany.txt 2.5 760.80 > prop_res_cav-25.txt

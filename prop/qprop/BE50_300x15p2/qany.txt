@@ -1,0 +1,8 @@
+Any motor
+
+ 1      ! motor type  (1 = permanent-magnet brushed or brushless DC motor)
+
+ 1.    ! motor parameter 1 ,  R  (Ohms)      for motor type 1
+ 1.      ! motor parameter 2 ,  Io (Amps)      for motor type 1 no load current
+ 1.    ! motor parameter 3 ,  Kv (rpm/Volt)  for motor type 1
+ 
