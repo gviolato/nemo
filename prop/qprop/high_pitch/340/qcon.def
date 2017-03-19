@@ -1,0 +1,3 @@
+ 1025.0   ! rho (kg/m^3)    density
+ 1.002E-3 ! mu  (kg/m-s)    dynamic viscosity
+ 1481.0   ! a   (m/s)       speed of sound
