@@ -1,0 +1,23 @@
+
+To build QPROP:
+
+ % cd bin
+ % edit Makefile    (set Fortran compiler flags for your system)
+ % make qprop
+ % make qmil
+
+
+To run sample cases:
+
+ % cd runs
+ % ../bin/qprop cam6x3 s400-6v-dd 0 0 8         (single-point case)
+ % ../bin/qprop cam6x3 s400-6v-dd 0,10,2 0 8    (multi-point case)
+ % ../bin/qmil template.mil
+
+User's manuals:  qprop_doc.txt  qmil_doc.txt
+Theory document:  qprop_theory.ps  or  qprop_theory.pdf
+
+Prop measurement info sheet:  prop_measure.eps  or  prop_measure.pdf
+
+
+

@@ -1,0 +1,159 @@
+
+QMIL User Guide                                      Version 1.10
+Mark Drela                                            4 Oct 05
+
+
+General Description
+===================
+
+Motivation
+----------
+QMIL is a propeller/windmill design program, whose output 
+is in the format of the QPROP propeller file.  Hence it is 
+ideally suited to be used in conjunction with QPROP,
+although its output can be adapted for other uses
+as needed.
+
+
+Theoretical model
+-----------------
+QMIL and QPROP have identical theoretical formulations.
+This is described in more detail in qprop_doc.txt, and
+in the theory document  qprop_theory.ps .
+Their only difference is the variables which are treated
+as knowns and unknowns:
+
+        knowns          unknowns
+        -----------     -----------  
+QMIL    cl              chords,angles
+QPROP   chords,angles   cl
+
+
+
+Input Files
+===========
+
+Fluid constants file    qcon.def  (optional)
+--------------------
+This optional file contains the fluid constants, in the following format:
+
+ 1.225    ! rho (kg/m^3)   density
+ 1.78E-5  ! mu  (kg/m-s)   dynamic viscosity
+ 340.0    ! a   (m/s)      speed of sound
+
+If this file is absent, QPROP and QMIL will use the default constants 
+defined in file  src/QDEF.INC .  The current defaults correspond 
+to sea level air.
+
+
+
+Design specification file
+-------------------------
+QMIL obtains its design inputs from a file with the following format,
+given in SI units:
+
+
+
+Template prop                                    
+
+ 2       ! Nblades
+
+ 0.0000  6.2832    ! CL0    CL_a 
+-0.8000  1.2000    ! CLmin  CLmax
+
+ 0.01000   0.008  0.006  0.40  ! CD0    CD2u   CD2l  CLCD0
+ 150000.0 -0.500               ! REref  REexp
+
+  0.0  0.5  1.0   ! XIdes   (r/R locations where design cl is specified)
+  0.6  0.5  0.4   ! CLdes   (specified cl)
+
+  0.05    !  hub radius(m)
+  1.50    !  tip radius(m)
+  8.00    !  speed(m/s)
+  240.0   !  rpm 
+
+  0.0      !  Thrust(N)   ( 0 if power  specified )
+  500.0    !  Power(W)    ( 0 if thrust specified )
+
+ 0   0.2   ! Ldes    KQdes
+
+  30       ! Nout    number of output stations (optional)
+
+
+
+Lines 1-6 are identical to those of the QPROP input file.
+See file qprop_doc.txt for a description.  For a windmill,
+"upside down" airfoils would typically be used. In this case...
+
+* CL0 and CLCD0 are negated from their conventional definitions
+* CLmin and CLmax actually are -CLmax and -CLmin
+* CD2u and CD2l are swapped
+
+For example, if a propeller airfoil which is defined by
+
+ 0.2000  6.2832    ! CL0    CL_a 
+-0.8000  1.2000    ! CLmin  CLmax
+
+ 0.01000   0.008  0.006  0.40  ! CD0    CD2u   CD2l  CLCD0
+
+is to be used upside-down on a windmill, it would be specified 
+as follows:
+
+-0.2000  6.2832    ! CL0    CL_a 
+-1.2000  0.8000    ! CLmin  CLmax
+
+ 0.01000   0.006  0.008 -0.40  ! CD0    CD2u   CD2l  CLCD0
+
+
+Lines 7-8 specify the cl distribution along the blade.
+Any number of radial XIdes locations with CLdes values
+can be given.  These are interpolated via a spline to the 
+output radial stations.  Two successive identical 
+XIdes values enable a slope break in the spline.
+
+
+Lines 9-12 give the hub and tip radii, the freestream airspeed
+(which can be zero), and the operating RPM.
+
+
+Lines 13-14 specify the prescribed thrust OR the prescribed power.
+Negative thrust or power are used for a windmill.  Neither values
+is used if the Ldes=2 option is chosen (below).
+
+
+Line 15 indicates the type of design option to be used.
+Ldes = 0   Minimum Induced Loss (usual prop design option)
+Ldes = 1   Minimum Total Loss   (not recommended -- very ill-behaved)
+Ldes = 2   Maximum Total Power  (only for windmills)
+
+The second optional value on line 15 controls the optimality 
+condition on the power for the Ldes=2 case:
+
+  dPower/dSwirl ~ KQdes
+
+ KQdes = 0.0       gives the actual maximum power
+ KQdes = 0.0-1.0   reduces the max power by some factor
+
+The intent is to "moderate" the optimality to get a more
+practical windmill geometry.  Significantly more practical
+geometries can be obtained (e.g. 20% narrower chords) for
+relatively minor power penalties (e.g. 5% or less).
+
+Line 16 gives the number of output radii.
+
+
+
+Program Execution
+=================
+QMIL is executed with the following command:
+
+ % qmil inputfile  [ outputpropfile ]
+
+The "inputfile" was described above.  With only this argument,
+the computed propeller results is printed to the screen. 
+
+If the second "outputpropfile" argument is given, the 
+propeller results are written to this outputpropfile.
+This file can then be immediately used as an argument
+to QPROP.
+

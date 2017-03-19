@@ -1,0 +1,8 @@
+
+Potensky 30W 10v
+
+ 1       ! motor type
+
+ 0.444   !  R  (Ohm)
+ 0.400   !  Io (Amp)
+ 1060    !  Kv (RPM/Volt)

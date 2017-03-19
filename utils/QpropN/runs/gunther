@@ -1,0 +1,22 @@
+
+Gunther Zagi prop
+
+ 2           ! Nblades
+
+ 0.35  6.0   ! CL0     CL_a
+ -0.3  1.2   ! CLmin   CLmax
+
+ 0.018  0.030  0.2   !  CD0    CD2    CLCD0
+ 60000   -0.7        !  REref  REexp
+
+ 0.01    0.01     1.0  !  Rfac   Cfac   Bfac  
+ 0.0     0.0      0.0  !  Radd   Cadd   Badd  
+
+#  r    chord    beta
+  2.0    1.38   34.41
+  3.0    1.67   27.84
+  4.0    1.85   21.90
+  5.0    1.77   17.76
+  6.0    1.20   14.97
+  6.25   0.85   14.40
+

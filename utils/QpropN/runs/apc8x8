@@ -1,0 +1,24 @@
+
+APC 8x6  (estimate)
+
+ 2           ! Nblades
+
+ 0.50  5.8   ! CL0     CL_a
+ -0.3  1.2   ! CLmin   CLmax
+
+ 0.028  0.050  0.5   !  CD0    CD2    CLCD0
+ 70000   -0.7        !  REref  REexp
+
+
+ 0.0254  0.0254   1.0  !  Rfac   Cfac   Bfac  
+ 0.0     0.0      0.0  !  Radd   Cadd   Badd  
+
+#  r    chord    beta
+ 0.75    0.66    31.5
+ 1.00    0.69    26.0
+ 1.50    0.63    19.2
+ 2.00    0.55    14.2
+ 2.50    0.44    10.5
+ 2.875   0.30     8.6
+ 3.00    0.19     8.2
+

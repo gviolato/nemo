@@ -1,0 +1,7 @@
+#
+# Run parameters for DraganFlyer Mod props
+#
+ 0.0    0.0    1   !  Vel1   Vel2   Nvel   (m/s)
+ 1000   2000  11   !  Rpm1   Rpm2   Nrpm
+ 6.0    14.0  0   9   !  Volt1  Volt2  Nvolt
+ -2.0   20    3    !  Dbet1  Dbet2  NDbet 

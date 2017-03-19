@@ -1,0 +1,13 @@
+
+Speed-280 6328 (6V) direct drive
+
+ 2     ! motor type (brushed DC)
+
+ 0.70     ! R0     (Ohms)    
+ 0.160    ! Io0    (Amps)    
+ 3800.0   ! Kv     (rpm/Volt)
+ 3800.0   ! Kq     (Amps/N-m)*30/pi
+ 1.0E-5   ! tau    (s)
+ 5.7E-5   ! Io1    (Amp-s)
+ 4.0E-8   ! Io2    (Amp-s^2)
+ 0.012    ! R2     (Ohms/Amps^2)

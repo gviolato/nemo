@@ -1,0 +1,27 @@
+
+Windmill
+
+   2       ! Nblades
+
+-0.20     5.90   ! CL0     CL_a
+ -1.0     0.8    ! CLmin   CLmax
+
+0.022   0.04  0.04  -0.2   !  CD0    CD2u  CD2l    CLCD0
+40000   -0.5               !  REref  REexp
+
+!0.0     0.0   0.0   -0.2   !  CD0    CD2u  CD2l    CLCD0
+!40000   -0.5               !  REref  REexp
+
+   0.0   0.5   1.0   ! XIdes   (r/R locations where design cl is specified)
+  -0.95 -0.65 -0.55  ! CLdes   (specified cl)
+
+  0.020   !  hub radius(m)
+  0.150   !  tip radius(m)
+   8.8    !  speed(m/s)
+  2600.0  !  rpm 
+
+  0.0    !  Thrust(N)   ( 0 if power  specified )
+ -20.0   !  Power(W)    ( 0 if thrust specified )
+
+  2  0.3    !  Ldes    FQdes
+  30       !  Nout     number of output stations (optional)

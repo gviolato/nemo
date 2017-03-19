@@ -1,0 +1,2 @@
+ftnchek -common=1 -novice=4 -argument=2 -notruncation \
+qprop.f gvcalc.f cdfun.f tqcalc.f bnsolv.f motor.f spline.f io.f

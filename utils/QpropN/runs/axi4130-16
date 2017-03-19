@@ -1,0 +1,8 @@
+
+Axi 4130/16
+
+ 1
+
+ 0.063    ! Rmotor (Ohms)
+ 1.80     ! Io     (Amps)
+ 390.0    ! Kv     (rpm/Volt)

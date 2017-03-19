@@ -1,0 +1,725 @@
+
+QPROP User Guide                                      Version 1.21
+Mark Drela                                            6 July 07
+
+General Description
+===================
+
+Motivation
+----------
+QPROP is an analysis program for predicting the performance 
+of propeller-motor combinations.  Its intent is to provide 
+an alternative to the existing prop/motor simulation programs, 
+which use relatively simple propeller models, and assume 
+a brushed DC motor type.  QPROP has a relatively sophisticated 
+and accurate prop aerodynamic model, and a general motor model 
+which can be implemented via a user-supplied subroutine 
+if necessary.
+
+The companion program QMIL generates propeller geometries
+for the Minimum Induced Loss (MIL) condition.  It can also
+generated windmill geometries for the MIL or Maximum Total Power
+(MTP) conditions.  See the qmil_doc.txt document for more info.
+
+
+Propeller aero model
+--------------------
+The propeller is modeled with an advanced blade-element/vortex
+method, which is essentially a considerably enhanced version 
+of the analysis method of Larrabee.  The enhancement is primarily 
+in the correct accounting of the prop's self-induction, 
+which makes QPROP accurate for very high disk loadings,
+all the way to the static-thrust case.  The blade airfoil
+lift characteristic is assumed to be a simple linear CL(alpha) 
+line with CLmax and CLmin stall limiting.  The profile drag
+characteristic is a quadratic CD(CL) function, with an
+approximate stall drag increase, and a power-law scaling 
+with Reynolds number.  The model applies equally well to
+propellers and windmills.
+
+The theoretical formulation is described in far more detail
+in the document  qprop_theory.ps 
+
+
+Motor models
+------------
+
+Motor type 1
+- - - - - - -
+The default motor type 1 corresponds to a brushed DC motor,
+and is modeled using the fairly standard approach with an 
+rpm/Volt motor constant Kv, an electrical resistance R, 
+and a constant rotational friction described by the zero-load 
+current Io.  The relations used are:
+
+  voltage    = V
+  current    = I
+  torque     = Q = (I-Io)/Kv
+  rot.speed  = w = (V-I*R)*Kv
+  mech.power = P = w*Q = (V-I*R) * (I-Io)
+  efficiency = P/(I*V) = (1-I*R/V) * (1-Io/I)
+
+The equations above assume Kv is in units of  rad/s / Volt,
+although it is specified in the traditional units of rpm/Volt.
+
+Motor type 2
+- - - - - - -
+Motor type 2 corresponds to a brushed DC motor, and is a more accurate
+extension of the type 1 model above.  The extensions are improved models
+of the frictional torque, temperature-dependent resistance, and 
+magnetic lags.  See the motor_theory.pdf document for a complete 
+description.
+
+Other motor types
+- - - - - - - - -
+Any other motor model can be coded in SUBROUTINE MOTORQ (in motor.f),
+as a Q(w,V) function.  The derivatives dQ/dw and dQ/dV must also
+be returned.  The subroutine source header fully describes the inputs
+and outputs.
+
+For non-electric motors, the "voltage" V passed to MOTORQ can represent
+any suitable power-control variable, e.g. throttle setting, fuel flow rate, etc.
+
+
+
+
+Input Files
+===========
+
+Fluid constants file    qcon.def  (optional)
+--------------------
+This optional file contains the fluid constants, in the following format:
+
+
+ 1.225    ! rho (kg/m^3)   density
+ 1.78E-5  ! mu  (kg/m-s)   dynamic viscosity
+ 340.0    ! a   (m/s)      speed of sound
+
+If this file is absent, QPROP will use the default constants 
+defined in file  src/QDEF.INC .  The current defaults correspond 
+to sea level air.
+
+
+
+Prop file
+---------
+QPROP requires a fairly detailed description of the
+propeller geometry and blade airfoil characteristics.  
+Although it would be nice to just specify the propeller's 
+diameter and pitch, this is in general insufficient to accurately 
+capture the propeller's performance.  Crude input is sure 
+to produce crude output.  Hence, it is worthwhile to accurately 
+measure the prop.  
+
+See the accompanying document  prop_measure.pdf for definitions 
+and measurement techniques.  Measurement of the blade angles 
+can be done with a commercial pitch-measuring gauge.  
+The blade angle beta at some radius r and pitch p 
+is then computed using the following equation:
+ 
+  beta  =  arctan[ p / (2 pi r) ]
+
+
+The prop file has the following format.  
+Blank lines and lines beginning with "#" are ignored.
+Any text after a "!" is ignored, allowing convenient 
+comments to be placed after the data.
+
+
+
+Graupner CAM 6x3 folder
+
+ 2     3.05  ! Nblades  [ R ]
+
+ 0.50  5.8   ! CL0     CL_a
+ -0.3  1.2   ! CLmin   CLmax
+
+ 0.028  0.050  0.020 0.5   !  CD0    CD2u   CD2l   CLCD0 
+ 70000   -0.7              !  REref  REexp
+
+ 0.0254  0.0254   1.0  !  Rfac   Cfac   Bfac  
+ 0.      0.       0.   !  Radd   Cadd   Badd  
+
+#  r    chord    beta
+ 0.75    0.66    27.5  ! root station
+ 1.00    0.69    22.0
+ 1.50    0.63    15.2
+ 2.00    0.55    10.2
+ 2.50    0.44     6.5
+ 2.875   0.30     4.6
+ 3.00    0.19     4.2  ! tip station, also gives R = r if R is omitted from Line 2
+
+
+
+1) Line 1 is the propeller description name
+
+2) Line 2 gives the number of blades, and optionally the reference radius R.
+If this R is omitted from line 2, then the tip station r value is used for R  
+(R = 3.00 would be used in this example)
+
+3,4) Lines 3 and 4 specify the linear CL(alpha) function for the blade airfoil:
+
+  CL(alpha)  =  ( CL0  +  CL_a*alpha ) / beta    ,  clipped to  CLmin..CLmax  range
+
+where  beta = sqrt(1 - M^2)  is the local Prantdl-Meyer compressibility factor
+
+The CL0 intercept at alpha=0 is equivalent to the zero-lift angle:
+
+  CL0  =  -CL_a * alpha_ZL
+
+Because the CL(alpha) curve is often nonlinear, specifying CL0 
+is usually more reliable.
+
+
+5) Lines 5 and 6 specify the 2-piece quadratic CD(CL,Re) function 
+for the blade airfoil:
+
+  CD(CL,Re)  =  [ CD0 + CD2*(CL-CLCD0)^2 ] * [Re/REref]^REexp
+
+where  
+
+   CD2 = CD2u  if CL > CLCD0
+   CD2 = CD2l  if CL < CLCD0
+
+It's usually acceptable to crayon-fit a 2-piece parabola to the airfoil's 
+drag polar from XFOIL or some other source, and read off the parameters.
+The Re-scaling factor crudely models Re variation effects on CD.
+
+REref is the Re value of the polar from which the CD0,CD2u,CD2l,CLCD0 
+parameters are obtained, and REexp adjusts the CD for other Re numbers.  
+Picking REexp = -0.5 is reasonable for most low Re airfoils.  For very
+large props with significant turbulent flow, REexp = -0.2 may be more 
+realistic.
+
+An additional CD contribution is added to the quadratic CD(CL) 
+if the CL is clipped at the stall limits:
+
+ dCD_stall = 2 * [ sin(alpha-aCD0) ]^2    ;   aCD0 = (CLCD0-CL0)/CL_a
+
+This gives the correct value CD = 2  for alpha ~ 90 degrees, 
+and is reasonable for more moderate stalled angles.
+
+
+7,8) Lines 7 and 8 specify scaling factors and added constants to be applied 
+to the following blade geometry data.  SI units are required, so the 
+factors of 0.0254 convert the radius and chord from inches to meters.
+The blade angle is input in degrees, and will be converted to radians.  
+The factors are applied before the added constants.  In summary:
+
+   r_SI  =  r     * Rfac  +  Radd              (r_SI in meters )
+   c_SI  =  chord * Cfac  +  Cadd              (c_SI in meters )
+   b_SI  = (beta  * Bfac  +  Badd) * pi/180    (b_SI in radians)
+
+The Rfac and Radd constants are also applied to the reference radius R,
+whether this is given in Line 2, or taken from the tip r value.
+
+   R_SI  =  R     * Rfac  +  Radd              (R_SI in meters )
+
+
+9...) Lines 9 onward give the geometry for some number of radial locations,
+from root to tip.  If R is given on line 2, the last station can be just
+short of the actual tip, with the remaining geometry obtained by extrapolation.
+If R is _not_ given on line 2, then the last station must be at the actual tip.
+
+The beta values are measured from the prop disk plane to the airfoil datum line 
+from which alpha is defined for the CL(alpha) function.
+
+The chord and beta data are splined and interpolated to a much
+finer radial spacing, so only relatively few radial stations
+are required.  However, overly coarse or irregular input might 
+cause spline overshoots.  The interpolated geometry is listed 
+as output, and should be checked for smoothness.
+
+
+Advanced propeller file format
+- - - - - - - - - - - - - - - -
+The prop file format above assumes all radii have the same
+airfoil characteristics.  As a more general alternative,
+each of the radial-station lines can optionally specify 
+the local airfoil section properties.  The more general format 
+for the prop file is:
+
+
+Graupner CAM 6x3 folder
+
+ 2     3.02  ! Nblades  [ R ]
+
+ 0.50  5.8   ! CL0     CL_a
+ -0.3  1.2   ! CLmin   CLmax
+
+ 0.028  0.050 0.020  0.5   !  CD0    CD2u   CD2l   CLCD0
+ 70000   -0.7              !  REref  REexp
+
+ 0.0254  0.0254   1.0  !  Rfac   Cfac   Bfac  
+ 0.      0.       0.   !  Radd   Cadd   Badd  
+
+#  r  chord  beta [  CL0  CL_a   CLmin CLmax  CD0   CD2u   CD2l   CLCD0  REref  REexp ]
+ 0.75  0.66  27.5   0.80  6.1   -0.3   1.5   0.032  0.060  0.010  0.6
+ 1.00  0.69  22.0   0.70  6.0   -0.3   1.4   0.030  0.056  0.014  0.55
+ 1.50  0.63  15.2   0.60  5.9   -0.3   1.3   0.029  0.054  0.020  0.52
+ 2.00  0.55  10.2
+ 2.50  0.44   6.5
+ 2.875 0.30   4.6
+ 3.00  0.19   4.2 
+
+
+
+Only the three inner radii above have local airfoil properties specified.
+The remaining radii with the airfoil data absent will simply be assigned 
+with the default data in lines 3-6.  A partial airfoil data list can 
+be given on any line.  For example, the three inner radii do not have 
+local REref and REexp numbers given.  These will then assume the default 
+values in line 6.
+
+
+
+Motor file - type 1
+-------------------
+The motor type 1 description file has the following format.
+
+
+Speed-400 3321 (6V) direct drive     ! name
+
+ 1        ! motor type  (1 = permanent-magnet brushed or brushless DC motor)
+
+ 0.31     ! motor parameter 1 ,  R  (Ohms)      for motor type 1
+ 0.77     ! motor parameter 2 ,  Io (Amps)      for motor type 1
+ 2760.0   ! motor parameter 3 ,  Kv (rpm/Volt)  for motor type 1
+  .
+  .
+  .
+
+
+1) Line 1 is the motor/gearing description name
+
+2) Line 2 is an integer specifying the motor model type.  
+         SUBROUTINE MOTORQ must implement the model of the specified type.
+
+3...) Lines 3... contain motor model parameters which are simply passed to MOTORQ.
+The example shown is the default brushed DC motor model, which requires
+three parameters:
+
+Line 3 is the motor resistance.
+
+Line 4 is the no-load current, which is best measured at close 
+to the expected operating rpm.
+
+Line 5 is the rpm/Volt constant.
+
+
+
+The specified voltage is defined at the motor terminals.  If desired,
+the battery+wiring+ESC resistance R' can be added to the specified 
+motor resistance:
+
+  R  ->  R + R'
+
+In this case, the specified "Volt" will be the unloaded battery voltage.
+The computed "motor efficiency" will then seem unusually low, since now
+it also includes the battery, wiring, and ESC resistive losses.
+
+
+A gearbox with gear ratio G:1 reduces Kv by the factor 1/G:
+
+  Kv  ->  Kv / G
+
+The power loss of the gearbox shows up as an increase in the
+zero-load current Io.  An expected gearbox efficiency "etaG"
+can be modeled by increasing Io as follows:
+
+  Io  ->  Io  +  I * (1-etaG)
+
+where I is the expected operating current.
+
+
+Motor file - type 2
+-------------------
+The motor type 2 description file has the following format.
+
+
+Speed-280 6328 (6V) direct drive
+
+ 2        ! motor type (brushed DC, higher-order model)
+
+ 0.70     ! R0     (Ohms)           
+ 0.160    ! Io0    (Amps)    
+ 3800.0   ! Kv     (rpm/Volt)
+ 3800.0   ! Kq     (Amps/N-m)*30/pi
+ 1.0E-5   ! tau    (s)
+ 5.7E-5   ! Io1    (Amp-s)
+ 4.0E-8   ! Io2    (Amp-s^2)
+ 0.012    ! R2     (Ohms/Amps^2)
+
+
+Line 3 is the motor resistance constant term.
+
+Line 4 is the no-load current constant term (independent of RPM)
+
+Line 5 is the rpm/Volt speed constant.
+
+Line 6 is the Amp/N-m torque constant.  Theoretically this should be the same as Kv.
+
+Line 7 is the magnetic lag time.
+
+Line 8 is the no-load current linear term (proportional to RPM)
+
+Line 8 is the no-load current quadratic term (proportional to RPM^2)
+
+Line 9 is the motor resistance quadratic coefficient, modeling resistive heating effect.
+
+
+
+
+
+
+Program Execution
+=================
+
+QPROP can be run in many different modes. 
+Some possible execution commands are:
+
+ % qprop propfile motorfile Vel Rpm [ Volt dBeta Thrust Torque Amps Pele ]   (single-point)
+
+ % qprop propfile motorfile Vel1,Vel2,dVel Rpm ["]              (multi-point 1-parameter sweep over Vel, Rpm set)
+
+ % qprop propfile motorfile Vel1,Vel2/nVel Rpm ["]              (multi-point 1-parameter sweep over Vel, Rpm set)
+
+ % qprop propfile motorfile Vel1,Vel2,dVel 0 Volt ["]           (multi-point 1-parameter sweep over Vel, Volt set)
+
+ % qprop propfile motorfile Vel1,Vel2,dVel Rpm1,Rpm2,dRpm ["]   (multi-point 2-parameter sweep over Vel and Rpm)
+
+ % qprop propfile motorfile runfile                             (multi-point, via file specification)
+
+The "propfile" and "motorfile" arguments are strings giving the filenames
+of the input files described above.  The remaining arguments are numbers,
+as will be described below.
+
+
+Single-point run
+----------------
+
+The following Unix syntax is used for a single-point run:
+
+ % qprop propfile motorfile Vel Rpm Volt dBeta Thrust Torque Amps Pele
+
+The parameters after and including "Volt" are optional.  
+So a command could be as short as
+
+ % qprop propfile motorfile Vel Rpm
+
+In either case, only the one point is computed, and a detailed radial output is generated.  
+
+The arguments starting with "Vel" are used as follows:
+
+1) "Vel" is always used as given.
+2) The next nonzero argument in the list (except for "dBeta") is used as given.
+3) "dBeta", which is the pitch-change angle in degrees, is always used as given,
+   (assumed zero if omitted)
+
+For example, the command 
+
+ % qprop propfile motorfile 4.0  0   0    0.0   0      0.03
+                          ( Vel  Rpm Volt dBeta Thrust Torque Amps Pele )
+
+specifies
+
+ Vel    = 4.0 m/s
+ Rpm    =   unspecified
+ Volt   =   unspecified
+ dBeta  = 0.0 deg
+ Thrust =   unspecified
+ Torque = 0.03 N-m
+ Amps   =   unspecified
+ Pele   =   unspecified
+
+As another example, the command
+
+ % qprop cam6x3 s400-6v-dd  0.0  0  8.0
+
+which corresponds to one of the points in the multi-point case, specifies
+
+  Vel   = 0.0 m/s
+  Rpm   =   unspecified 
+  Volt  = 8.0 V
+  dBeta = 0.0 deg
+
+and will produce the following output:
+
+
+
+# Graupner CAM 6x3 folder                                                         
+# 
+# Speed-400 3321 (6V) direct drive                                                
+#   0.31000     R  (Ohm)                        
+#   0.77000     Io (Amp)                        
+#    2760.0     Kv (rpm/Volt)                   
+# 
+#   rho =  1.2250     kg/m^3
+#   mu  = 0.17800E-04 kg/m-s
+#   a   =  340.00     m/s   
+# 
+#  1         2        3          4          5         6            7         8       9        10        11        12          13        14        15      16          17           18       19
+# 
+#  V(m/s)    rpm      Dbeta      T(N)       Q(N-m)    Pshaft(W)    Volts     Amps    effmot   effprop   adv       CT          CP        DV(m/s)   eff     Pelec       Pprop        cl_avg   cd_avg
+#   0.000  0.1402E+05  0.000   3.377      0.2992E-01   43.94       8.000    9.4184   0.5831   0.0000   0.00000  0.1005E-07  0.2968E-10   0.4416   0.0000   75.35       0.000       0.7742  0.3801E-01
+# 
+#  radius   chord   beta      Cl       Cd       Re    Mach     effi     effp    Wa(m/s)     Aswirl      adv_wake
+   0.0202  0.0170  26.380   1.1945  0.15286    33356  0.084   0.0000   0.6657   7.843       15.97      0.1926E-02
+   0.0225  0.0173  24.311   1.1970  0.12900    38003  0.094   0.0000   0.6965   8.413       15.32      0.2053E-02
+   0.0248  0.0175  22.471   1.1985  0.11105    42391  0.103   0.0000   0.7210   8.922       14.69      0.2165E-02
+   0.0271  0.0175  20.856   1.1960  0.06964    46406  0.113   0.0000   0.7995   9.358       14.06      0.2258E-02
+   0.0293  0.0173  19.442   1.1445  0.06168    50050  0.123   0.0000   0.8025   9.551       13.16      0.2287E-02
+   0.0316  0.0171  18.191   1.1011  0.05578    53264  0.133   0.0000   0.8031   9.701       12.35      0.2308E-02
+   0.0339  0.0167  17.065   1.0632  0.05121    56095  0.143   0.0000   0.8021   9.815       11.61      0.2322E-02
+   0.0362  0.0163  16.026   1.0280  0.04748    58627  0.153   0.0000   0.7998   9.895       10.93      0.2330E-02
+   0.0385  0.0159  15.037   0.9927  0.04421    60982  0.164   0.0000   0.7967   9.942       10.30      0.2331E-02
+   0.0408  0.0156  14.071   0.9555  0.04119    63257  0.174   0.0000   0.7929   9.956       9.714      0.2326E-02
+   0.0431  0.0152  13.130   0.9171  0.03848    65428  0.184   0.0000   0.7882   9.939       9.163      0.2315E-02
+   0.0453  0.0149  12.219   0.8785  0.03609    67434  0.194   0.0000   0.7823   9.892       8.644      0.2298E-02
+   0.0476  0.0145  11.344   0.8406  0.03407    69203  0.204   0.0000   0.7750   9.817       8.153      0.2274E-02
+   0.0499  0.0141  10.511   0.8044  0.03242    70646  0.214   0.0000   0.7659   9.716       7.688      0.2246E-02
+   0.0522  0.0137   9.726   0.7705  0.03114    71668  0.224   0.0000   0.7549   9.590       7.246      0.2212E-02
+   0.0545  0.0132   8.988   0.7393  0.03019    72248  0.234   0.0000   0.7420   9.442       6.826      0.2174E-02
+   0.0568  0.0127   8.296   0.7103  0.02950    72435  0.244   0.0000   0.7273   9.276       6.430      0.2132E-02
+   0.0591  0.0122   7.647   0.6834  0.02902    72295  0.254   0.0000   0.7110   9.097       6.056      0.2088E-02
+   0.0613  0.0117   7.039   0.6582  0.02871    71907  0.264   0.0000   0.6931   8.911       5.706      0.2043E-02
+   0.0636  0.0111   6.469   0.6345  0.02852    71363  0.274   0.0000   0.6741   8.721       5.380      0.1997E-02
+   0.0659  0.0106   5.937   0.6125  0.02847    70566  0.284   0.0000   0.6537   8.526       5.074      0.1951E-02
+   0.0682  0.0100   5.449   0.5951  0.02883    68690  0.294   0.0000   0.6301   8.296       4.769      0.1896E-02
+   0.0705  0.0091   5.014   0.5857  0.02999    64640  0.303   0.0000   0.6002   7.988       4.440      0.1824E-02
+   0.0728  0.0078   4.638   0.5886  0.03271    57189  0.313   0.0000   0.5584   7.537       4.055      0.1720E-02
+   0.0751  0.0060   4.329   0.6110  0.03893    45098  0.324   0.0000   0.4919   6.824       3.557      0.1555E-02
+
+This gives detailed aerodynamic characteristics of the blade along the radius.
+
+The first three columns are interpolated from the input geometry data in the prop file, 
+and can be plotted and checked for smoothness.  The remaining columns are computed
+via the propeller aerodynamic model.
+
+ Cl   = local blade airfoil lift coefficient.  The inner radii are stalled at the CLmax limit
+ Cd   = local blade profile drag coefficient.  Note the large Cd at the stalled stations.
+ Re   = local chord Reynolds number, which influences the Cd.
+ Ma   = local Mach number.  This modifies the Cl and Cd functions.
+ effi = local induced efficiency.  This is by definition zero for a static case.
+ effp = local profile efficiency.
+ Wa   = local axial propwash velocity.
+ Aswirl = prowash angle from axial
+ adv_wake = local wake advance ratio (somewhat arcane).
+
+
+If this output is dumped into a file, GnuPlot can be used to plot it.
+For example,
+
+ % qprop cam6x3 s400-6v-dd  0.0  0.  8.0  >  out.dat
+ % gnuplot
+ gnuplot> plot "out.dat" u 1:2 w linesp
+ gnuplot> plot "out.dat" u 1:3 w linesp
+ gnuplot> plot "out.dat" u 1:4 w linesp
+ gnuplot> plot "out.dat" u 1:10 w linesp
+
+will plot the interpolated chord and blade angle distributions,
+and also the local cl and propwash velocity.
+
+
+Multi-point runs
+----------------
+For multi-point runs, one or more of the four numerical arguments is
+replaced by the following constructs:
+
+Vel    replaced by  Vel1,Vel2,dVel
+Rpm    replaced by  Rpm1,Rpm2,dRpm
+Volt   replaced by  Volt1,Volt2,dVolt
+Dbeta  replaced by  Dbeta1,Dbeta2,dDbeta
+.
+.
+
+
+Vel    replaced by  Vel1,Vel2/NVel
+Rpm    replaced by  Rpm1,Rpm2/NRpm
+Volt   replaced by  Volt1,Volt2/NVolt
+Dbeta  replaced by  Dbeta1,Dbeta2/NDbeta
+.
+.
+
+etc.
+
+
+The constructs indicate a range of individual parameter values.  For example,
+
+5.0,10.0,1.0   ->   5.0  6.0  7.0  8.0  9.0  10.0
+0.0,1.0/10     ->   0.0  0.1  0.2  0.3  0.4  0.5  0.6  0.7  0.8  0.9  1.0
+
+Note that the step size can be given directly, as ",1.0" above,
+or indirectly via the number of intervals, as "/10" above.
+
+
+The output will now consist of the operating parameters for all combinations
+of the specified parameters thus specified.  For the files used as examples above, 
+
+ % qprop cam6x3 s400-6v-dd 0.0,12.0/6  0.0  7.0  0.0
+
+the following output is produced:
+
+# QPROP Version 1.20
+# 
+# Graupner CAM 6x3 folder                                                         
+# 
+# Speed-400 3321 (6V) direct drive                                                
+#   0.31000     R  (Ohm)                        
+#   0.77000     Io (Amp)                        
+#    2760.0     Kv (rpm/Volt)                   
+# 
+#   rho =  1.2250     kg/m^3
+#   mu  = 0.17800E-04 kg/m-s
+#   a   =  340.00     m/s   
+# 
+#  1         2        3          4          5         6            7         8       9        10        11        12          13        14        15      16          17           18       19
+# 
+#  V(m/s)    rpm      Dbeta      T(N)       Q(N-m)    Pshaft(W)    Volts     Amps    effmot   effprop   adv       CT          CP        DV(m/s)   eff     Pelec       Pprop        cl_avg   cd_avg
+    0.000  0.1259E+05  0.000   2.712      0.2454E-01   32.36       7.000    7.8635   0.5879   0.0000   0.00000  0.1001E-07  0.3019E-10   0.3957   0.0000   55.04       0.000       0.7713  0.4079E-01
+    2.400  0.1263E+05  0.000   2.480      0.2440E-01   32.26       7.000    7.8210   0.5893   0.1845   0.00060  0.9099E-08  0.2983E-10   0.0297   0.1087   54.75       5.953       0.6983  0.3701E-01
+    4.800  0.1271E+05  0.000   2.220      0.2405E-01   32.02       7.000    7.7203   0.5925   0.3328   0.00120  0.8035E-08  0.2901E-10   0.0133   0.1972   54.04       10.66       0.6135  0.3432E-01
+    7.200  0.1286E+05  0.000   1.939      0.2347E-01   31.60       7.000    7.5534   0.5977   0.4417   0.00178  0.6861E-08  0.2769E-10   0.0078   0.2640   52.87       13.96       0.5213  0.3272E-01
+    9.600  0.1307E+05  0.000   1.640      0.2260E-01   30.94       7.000    7.3013   0.6053   0.5088   0.00234  0.5613E-08  0.2579E-10   0.0049   0.3080   51.11       15.74       0.4248  0.3213E-01
+   12.000  0.1338E+05  0.000   1.326      0.2137E-01   29.94       7.000    6.9476   0.6156   0.5314   0.00286  0.4336E-08  0.2330E-10   0.0032   0.3271   48.63       15.91       0.3276  0.3256E-01
+
+
+
+where...
+
+ V      = airspeed
+ rpm    = prop rpm
+ Dbeta  = pitch change in degrees
+ T      = propeller thrust
+ Q      = propeller torque
+ Pshaft = shaft power       = Q*w  ,   w = rpm*pi/30
+ Volts  = motor voltage
+ Amps   = motor current
+ effmot = motor efficiency  = Pshaft/(Volts*Amps)
+ effprop= prop efficiency   = TV/Pshaft
+ adv    = advance ratio     = V/(w*R)
+ CT     = thrust coefficient = T / (0.5 rho (wR)^2 pi R^2)
+ CP     = torque coefficient = Q / (0.5 rho (wR)^2 pi R^3)
+ DV     = slipstream velocity increment
+ eff    = overall drive efficiency = effmot*effprop
+ Pelec  = electrical power  =  Amps*Volts
+ Pprop  = prop power  =  V*T
+ cl_avg = power-weighted average of local cl(r)
+ cd_avg = power-weighted average of local cd(r)
+
+The parameter table format above can be dumped into a file and plotted in GnuPlot.
+For example,
+
+ % qprop cam6x3 s400-6v-dd 0.0,12.0/6  0.0  7.0  0.0  >  out.dat
+ % gnuplot
+gnuplot> plot "out.dat" u 1:4 w linesp
+
+will generate lines of Thrust vs Airspeed  for the fixed voltage of 7V.  Alternatively,
+the file can also be imported into a spreadsheet for plotting.
+
+
+
+More than one argument can be given a range construct.  With the command
+
+ % qprop cam6x3 s400-6v-dd 0.0,12.0/7  0.0  5.0,9.0,1.0  0.0
+
+the following output is produced:
+
+# QPROP Version 1.20
+# 
+# Graupner CAM 6x3 folder                                                         
+# 
+# Speed-400 3321 (6V) direct drive                                                
+#   0.31000     R  (Ohm)                        
+#   0.77000     Io (Amp)                        
+#    2760.0     Kv (rpm/Volt)                   
+# 
+#   rho =  1.2250     kg/m^3
+#   mu  = 0.17800E-04 kg/m-s
+#   a   =  340.00     m/s   
+# 
+#  1         2        3          4          5         6            7         8       9        10        11        12          13        14        15      16          17           18       19
+# 
+#  V(m/s)    rpm      Dbeta      T(N)       Q(N-m)    Pshaft(W)    Volts     Amps    effmot   effprop   adv       CT          CP        DV(m/s)   eff     Pelec       Pprop        cl_avg   cd_avg
+    0.000   9497.      0.000   1.531      0.1474E-01   14.66       5.000    5.0289   0.5828   0.0000   0.00000  0.9928E-08  0.3186E-10   0.2973   0.0000   25.14       0.000       0.7663  0.4920E-01
+    2.000   9529.      0.000   1.384      0.1461E-01   14.58       5.000    4.9917   0.5840   0.1900   0.00067  0.8920E-08  0.3137E-10   0.0199   0.1109   24.96       2.769       0.6855  0.4460E-01
+    4.000   9598.      0.000   1.217      0.1433E-01   14.40       5.000    4.9107   0.5865   0.3379   0.00133  0.7726E-08  0.3033E-10   0.0088   0.1982   24.55       4.866       0.5906  0.4131E-01
+    6.000   9710.      0.000   1.031      0.1387E-01   14.11       5.000    4.7800   0.5903   0.4386   0.00197  0.6398E-08  0.2870E-10   0.0050   0.2589   23.90       6.187       0.4868  0.3961E-01
+    8.000   9878.      0.000  0.8302      0.1320E-01   13.65       5.000    4.5839   0.5956   0.4865   0.00258  0.4978E-08  0.2637E-10   0.0030   0.2898   22.92       6.641       0.3778  0.3950E-01
+   10.000  0.1011E+05  0.000  0.6148      0.1224E-01   12.97       5.000    4.3087   0.6019   0.4741   0.00315  0.3517E-08  0.2334E-10   0.0018   0.2854   21.54       6.148       0.2680  0.4098E-01
+   12.000  0.1043E+05  0.000  0.3863      0.1098E-01   11.99       5.000    3.9440   0.6080   0.3866   0.00366  0.2079E-08  0.1970E-10   0.0009   0.2350   19.72       4.635       0.1623  0.4370E-01
+
+    0.000  0.1109E+05  0.000   2.094      0.1947E-01   22.60       6.000    6.3961   0.5889   0.0000   0.00000  0.9967E-08  0.3088E-10   0.3478   0.0000   38.38       0.000       0.7687  0.4437E-01
+    2.000  0.1112E+05  0.000   1.925      0.1935E-01   22.52       6.000    6.3615   0.5901   0.1710   0.00057  0.9115E-08  0.3053E-10   0.0276   0.1009   38.17       3.851       0.7002  0.4055E-01
+    4.000  0.1118E+05  0.000   1.735      0.1908E-01   22.35       6.000    6.2858   0.5925   0.3106   0.00114  0.8119E-08  0.2977E-10   0.0125   0.1840   37.72       6.940       0.6208  0.3775E-01
+    6.000  0.1129E+05  0.000   1.528      0.1866E-01   22.06       6.000    6.1645   0.5964   0.4157   0.00169  0.7020E-08  0.2858E-10   0.0073   0.2479   36.99       9.169       0.5344  0.3600E-01
+    8.000  0.1144E+05  0.000   1.307      0.1804E-01   21.61       6.000    5.9848   0.6019   0.4838   0.00223  0.5844E-08  0.2689E-10   0.0047   0.2912   35.91       10.46       0.4432  0.3524E-01
+   10.000  0.1165E+05  0.000   1.073      0.1718E-01   20.96       6.000    5.7350   0.6092   0.5120   0.00273  0.4625E-08  0.2467E-10   0.0031   0.3119   34.41       10.73       0.3502  0.3551E-01
+   12.000  0.1194E+05  0.000  0.8280      0.1604E-01   20.04       6.000    5.4051   0.6181   0.4957   0.00320  0.3401E-08  0.2196E-10   0.0020   0.3064   32.43       9.936       0.2584  0.3673E-01
+
+    0.000  0.1259E+05  0.000   2.712      0.2454E-01   32.36       7.000    7.8635   0.5879   0.0000   0.00000  0.1001E-07  0.3019E-10   0.3957   0.0000   55.04       0.000       0.7713  0.4079E-01
+    2.000  0.1262E+05  0.000   2.520      0.2444E-01   32.29       7.000    7.8349   0.5888   0.1561   0.00050  0.9262E-08  0.2995E-10   0.0361   0.0919   54.84       5.040       0.7114  0.3781E-01
+    4.000  0.1268E+05  0.000   2.310      0.2419E-01   32.12       7.000    7.7601   0.5912   0.2877   0.00100  0.8404E-08  0.2933E-10   0.0166   0.1701   54.32       9.238       0.6428  0.3505E-01
+    6.000  0.1278E+05  0.000   2.082      0.2379E-01   31.83       7.000    7.6464   0.5948   0.3923   0.00149  0.7459E-08  0.2842E-10   0.0100   0.2333   53.52       12.49       0.5682  0.3340E-01
+    8.000  0.1292E+05  0.000   1.841      0.2321E-01   31.41       7.000    7.4797   0.5999   0.4688   0.00197  0.6451E-08  0.2712E-10   0.0066   0.2813   52.36       14.73       0.4895  0.3241E-01
+   10.000  0.1312E+05  0.000   1.588      0.2242E-01   30.80       7.000    7.2498   0.6068   0.5158   0.00243  0.5401E-08  0.2541E-10   0.0046   0.3130   50.75       15.88       0.4086  0.3213E-01
+   12.000  0.1338E+05  0.000   1.326      0.2137E-01   29.94       7.000    6.9476   0.6156   0.5314   0.00286  0.4336E-08  0.2330E-10   0.0032   0.3271   48.63       15.91       0.3276  0.3256E-01
+
+    0.000  0.1402E+05  0.000   3.377      0.2992E-01   43.94       8.000    9.4184   0.5831   0.0000   0.00000  0.1005E-07  0.2968E-10   0.4416   0.0000   75.35       0.000       0.7742  0.3801E-01
+    2.000  0.1404E+05  0.000   3.163      0.2983E-01   43.87       8.000    9.3913   0.5839   0.1442   0.00045  0.9382E-08  0.2949E-10   0.0452   0.0842   75.13       6.326       0.7205  0.3539E-01
+    4.000  0.1411E+05  0.000   2.933      0.2958E-01   43.70       8.000    9.3208   0.5860   0.2685   0.00090  0.8625E-08  0.2900E-10   0.0211   0.1573   74.57       11.73       0.6599  0.3291E-01
+    6.000  0.1420E+05  0.000   2.684      0.2921E-01   43.43       8.000    9.2132   0.5893   0.3708   0.00135  0.7792E-08  0.2826E-10   0.0129   0.2185   73.71       16.11       0.5938  0.3139E-01
+    8.000  0.1433E+05  0.000   2.424      0.2867E-01   43.03       8.000    9.0570   0.5939   0.4507   0.00178  0.6905E-08  0.2723E-10   0.0087   0.2676   72.46       19.39       0.5243  0.3033E-01
+   10.000  0.1451E+05  0.000   2.153      0.2793E-01   42.45       8.000    8.8431   0.6001   0.5072   0.00219  0.5980E-08  0.2586E-10   0.0062   0.3043   70.75       21.53       0.4525  0.2979E-01
+   12.000  0.1475E+05  0.000   1.873      0.2696E-01   41.66       8.000    8.5633   0.6081   0.5395   0.00259  0.5035E-08  0.2416E-10   0.0045   0.3281   68.51       22.48       0.3800  0.2978E-01
+
+    0.000  0.1539E+05  0.000   4.083      0.3557E-01   57.31       9.000   11.0507   0.5762   0.0000   0.00000  0.1009E-07  0.2931E-10   0.4856   0.0000   99.46       0.000       0.7772  0.3578E-01
+    2.000  0.1541E+05  0.000   3.849      0.3548E-01   57.25       9.000   11.0248   0.5769   0.1345   0.00041  0.9486E-08  0.2915E-10   0.0548   0.0776   99.22       7.698       0.7284  0.3343E-01
+    4.000  0.1546E+05  0.000   3.599      0.3525E-01   57.08       9.000   10.9579   0.5788   0.2522   0.00082  0.8805E-08  0.2874E-10   0.0259   0.1460   98.62       14.40       0.6738  0.3116E-01
+    6.000  0.1555E+05  0.000   3.330      0.3489E-01   56.83       9.000   10.8554   0.5817   0.3516   0.00123  0.8056E-08  0.2814E-10   0.0160   0.2045   97.70       19.98       0.6143  0.2976E-01
+    8.000  0.1568E+05  0.000   3.051      0.3438E-01   56.45       9.000   10.7079   0.5858   0.4323   0.00162  0.7261E-08  0.2728E-10   0.0110   0.2533   96.37       24.41       0.5517  0.2871E-01
+   10.000  0.1585E+05  0.000   2.762      0.3369E-01   55.92       9.000   10.5071   0.5913   0.4939   0.00201  0.6432E-08  0.2615E-10   0.0080   0.2920   94.56       27.62       0.4870  0.2804E-01
+   12.000  0.1607E+05  0.000   2.464      0.3278E-01   55.18       9.000   10.2456   0.5985   0.5359   0.00238  0.5580E-08  0.2475E-10   0.0059   0.3207   92.21       29.57       0.4213  0.2779E-01
+
+
+Again, the two-parameter table format above can be dumped into a file and plotted in GnuPlot.
+For example,
+
+ % qprop cam6x3 s400-6v-dd 0.0,12.0/7  0.0  5.0,9.0,1.0  0.0   >  out.dat
+ % gnuplot
+gnuplot> plot "out.dat" u 1:4 w linesp
+
+will generate lines of Thrust vs Airspeed  for the five voltages 5-9V.  Alternatively,
+the file can also be imported into a spreadsheet for plotting.
+
+
+
+Operating-parameter run file
+----------------------------
+This optional file specifies the airspeeds and voltages to be imposed 
+on the prop/motor combination.  The file format is
+
+
+ 0.0    12.0   7   !  Vel1   Vel2   Nvel   (m/s)
+ 10000  16000  0   !  Rpm1   Rpm2   Nrpm
+ 5.0    9.0    5   !  Volt1  Volt2  Nvolt
+ -2.0   2.0    3   !  Dbet1  Dbet2  NDbet
+
+1) Line 1 specifies flight velocities from Vel1 to Vel2 in Nvel samples.
+For the example line 1, the velocities are
+ 
+ Vel  =  0  2  4  6  8  10  12  (m/s)
+
+
+2) Line 2 specifies prop rpms from Rpm1 to Rpm2 in Nrpm samples:
+Special action is taken depending on Nrpm...
+ If Nrpm=0, then Voltages are set, Rpms are computed  (Line 2 data is ignored)
+ If Nrpm>0, then Rpms are set, Voltages are computed  (Line 3 data is ignored)
+
+
+3) Line 3 specifies motor voltages from Volt1 to Volt2, in Nvolt samples.
+This voltage is simply passed to SUBR.MOTORQ, and can represent any 
+power control parameter, such as "throttle" for an IC engine.
+
+4) Line 4 specifies blade pitch change, in degrees.  This line is optional.
+

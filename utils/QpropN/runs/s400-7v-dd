@@ -1,0 +1,8 @@
+
+Speed-400 1794 (7V) direct drive
+
+ 1     ! motor type (brushed DC)
+
+ 0.43     ! Rmotor (Ohms)
+ 0.62     ! Io     (Amps)
+ 2310.0   ! Kv     (rpm/Volt)

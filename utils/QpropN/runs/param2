@@ -1,0 +1,7 @@
+#
+# Run parameters for S-400 electric glider
+#
+ 0.0    8.0    9   !  Vel1   Vel2   Nvel   (m/s)
+ 2000   8000   7   !  Rpm1   Rpm2   Nrpm
+ 5.0    9.0    0   !  Volt1  Volt2  Nvolt
+

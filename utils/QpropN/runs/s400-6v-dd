@@ -1,0 +1,8 @@
+
+Speed-400 3321 (6V) direct drive
+
+ 1     ! motor type (brushed DC)
+
+ 0.31     ! Rmotor (Ohms)
+ 0.77     ! Io     (Amps)
+ 2760.0   ! Kv     (rpm/Volt)

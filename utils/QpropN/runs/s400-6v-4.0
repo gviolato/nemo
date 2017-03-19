@@ -1,0 +1,8 @@
+
+Speed-400 3321 (6V)  4:1
+
+ 1     ! motor type (brushed DC)
+
+ 0.31     ! Rmotor (Ohms)
+ 1.10     ! Io     (Amps)
+ 690.0    ! Kv     (rpm/Volt)

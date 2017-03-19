@@ -1,0 +1,55 @@
+
+QPROP 1.00      Sep 04
+----------------------
+- Prototype version
+
+
+QMIL  1.10    2 Aug 05
+----------------------
+- Prototype version
+
+
+QPROP 1.14    8 Sep 05
+----------------------
+- Improved Prandtl's fudge factor.  
+  Gives better results at inner radii.
+
+- Changed most of the output to G format,
+  to deal with wide range of magnitudes.
+
+
+QMIL  1.10   4 Oc 05
+--------------------
+- Added qmil_doc.txt document
+
+
+QPROP 1.15   12 Oct 05
+----------------------
+- Added general fluid properties, via optional file qcon.def
+- Added include file QCON.INC with default fluid properties
+- Added fluid property values to output listing
+
+
+QPROP 1.16   19 Nov 05
+----------------------
+- Tweaked Prandtl's fudge factor further.
+
+
+QPROP 1.20   6 Dec 06
+---------------------
+- Added many more specifiable parameters to the QPROP command line:
+       Vel Rpm Volt dBeta Thrust Torque Amps Pele
+  So Thrust, or Torque, or Amps can be specified instead of Rpm, for example.
+
+
+QPROP 1.21   6 Jul 07
+---------------------
+- Fixed a few command-line parsing problems.
+- Fixed definition of CT and CP in qprop_doc.txt
+
+
+QPROP 1.22  10 Nov 07
+---------------------
+- In QMIL, increased the CLdes array limit to 100
+
+
