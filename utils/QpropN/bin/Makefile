@@ -6,6 +6,7 @@ FFLAGS = -O
 # default Unix fortran
 FC = f77
 FTNLIB =
+FITLIB = ../lib/fitlib.a
 
 #------------------------------------
 # Intel Fortran Compiler
@@ -21,7 +22,7 @@ FTNLIB =
 
 qprop: polardatamodule.mod qprop.o polar.o gvcalc.o cdfun.o tqcalc.o motor.o spline.o io.o qcget.o
 	$(FC) -o qprop qprop.o gvcalc.o cdfun.o tqcalc.o motor.o \
-spline.o io.o qcget.o polar.o polardata.o $(FTNLIB)
+spline.o io.o qcget.o polar.o polardata.o $(FTNLIB) $(FITLIB)
 
 qmil: qmil.o tpdes.o gvcalc.o cdfun.o tqcalc.o bnsolv.o \
 spline.o io.o qcget.o
@@ -33,8 +34,20 @@ spline.o io.o qcget.o aread.o lefinda.o
 	$(FC) -o vlprop vlprop.o cdfun.o vlset.o motor.o aic.o \
 spline.o io.o qcget.o aread.o lefinda.o $(FTNLIB)
 
+#-----------
+# Test area
+#-----------
 
+tst_readpn: tst_readpn.o io.o
+	$(FC) -o tst_readpn tst_readpn.o io.o
 
+tst_initpol: polardatamodule.mod tst_initpol.o polar.o io.o
+	$(FC) -o tst_initpol tst_initpol.o io.o polardata.o polar.o
+
+tst_interppol: polardatamodule.mod tst_interppol.o polar.o io.o
+	$(FC) -o tst_interppol tst_interppol.o io.o polardata.o polar.o $(FITLIB)
+
+#-----------
 qprop.o: $(SRC)/qprop.f $(SRC)/QDEF.INC
 	$(FC) -c $(FFLAGS) $(SRC)/qprop.f
 
@@ -96,7 +109,21 @@ lefinda.o: $(VLSRC)/lefinda.f
 aic.o: $(VLSRC)/aic.f
 	$(FC) -c $(FFLAGS) $(VLSRC)/aic.f
 
+
+#--TESTFUNS--
+tst_readpn.o: $(SRC)/tst_readpn.f
+	$(FC) -c $(FFLAGS) $(SRC)/tst_readpn.f
+
+tst_initpol.o: $(SRC)/tst_initpol.f
+	$(FC) -c $(FFLAGS) $(SRC)/tst_initpol.f
+
+tst_interppol.o: $(SRC)/tst_interppol.f
+	$(FC) -c $(FFLAGS) $(SRC)/tst_interppol.f
+
 .PHONY: clean
 
 clean:
 	rm -fr *.o *.mod qprop
+
+clean_tst:
+	rm -fr *.o *.mod tst_* *test*

@@ -188,7 +188,7 @@ C------ total velocity
         W_VEL = (WA*WA_VEL + WT*WT_VEL)/W
         W_OMG = (WA*WA_OMG + WT*WT_OMG)/W
 C
-C------ angle of attack
+C------angle of attack
         A = BETA - ATAN2(WA,WT)
         A_PSI = (-WT*WA_PSI + WA*WT_PSI)/WSQ
         A_VEL = (-WT*WA_VEL + WA*WT_VEL)/WSQ
@@ -218,17 +218,17 @@ C------CL(alpha,Mach) function
         RES_A = A
         CALL GETPOLARCLINFO(POLAR,A,CL,DCLDA,CL0,STALL)
         CL     =  CL*PG
-        IF (STALL) THEN
-           CL_PSI = DCLDA*A_PSI
-           CL_VEL = DCLDA*A_VEL
-           CL_OMG = DCLDA*A_OMG
-           CL_BE  = DCLDA*A_BE           
-        ELSE
-           CL_PSI =  DCLDA*A_PSI   *PG + (DCLDA*A + CL0)*PG_PSI 
-           CL_VEL =  DCLDA*A_VEL   *PG + (DCLDA*A + CL0)*PG_VEL 
-           CL_OMG =  DCLDA*A_OMG   *PG + (DCLDA*A + CL0)*PG_OMG 
-           CL_BE  =  DCLDA*A_BE    *PG   
-        ENDIF
+C        IF (STALL) THEN
+        CL_PSI = DCLDA*A_PSI
+        CL_VEL = DCLDA*A_VEL
+        CL_OMG = DCLDA*A_OMG
+        CL_BE  = DCLDA*A_BE           
+C        ELSE
+C           CL_PSI =  DCLDA*A_PSI   *PG + (DCLDA*A + CL0)*PG_PSI 
+C           CL_VEL =  DCLDA*A_VEL   *PG + (DCLDA*A + CL0)*PG_VEL 
+C           CL_OMG =  DCLDA*A_OMG   *PG + (DCLDA*A + CL0)*PG_OMG 
+C           CL_BE  =  DCLDA*A_BE    *PG   
+C        ENDIF
 C
 C------ Newton residual
         RES     = GAM     - 0.5*CHORD* CL*W

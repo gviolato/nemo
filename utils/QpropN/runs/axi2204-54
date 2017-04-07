@@ -1,9 +1,0 @@
-
- Axi 2204/54
-
- 1        ! motor type  (Permanent Magnet DC)
-
- 0.460    ! Rmotor (ohms)
- 0.40     ! Io     (Amps)
- 1380.0   ! Kv     (rpm/V)
-

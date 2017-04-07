@@ -294,7 +294,7 @@ C
       IF(IERR.EQ.-1) GO TO 950
       IF(NPOLS.LT.1) GO TO 980
       DO IP = 1, NPOLS
-         CALL INITPOLAR(POLFILES(IP), IPOLAR)
+         CALL INITPOLAR(POLFILES(IP), IPOLAR, IERR)
          DEFPOLARS(IP) = IPOLAR
       ENDDO
 C
@@ -696,12 +696,15 @@ C
         B(I) = SEVAL(R(I),BB,WORK,RB,NR)
       ENDDO
 C
-      IR = 0
       DO I = 1, N
- 710     CONTINUE
-         IR = IR + 1
-         IF (R(I) .LT. RB(IR)) GO TO 710
-         POLAR(I) = POLARB(IR)
+         IR = 0
+ 41      IF(IR.LT.NR) THEN
+            IR = IR + 1
+            IF(RB(IR).LT.R(I)) GO TO 41
+            POLAR(I) = POLARB(IR-1)
+         ELSE
+            POLAR(I) = POLARB(IR)
+         ENDIF
       ENDDO
 C
       CALL SPLINE(REREFB,WORK,RB,NR)

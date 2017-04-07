@@ -1,6 +1,4 @@
 
-1.225    ! rho  kg/m^3
-1.78E-5  ! mu   kg/m-s
-340.0    ! a    m/s
-
-
+1025       ! rho  kg/m^3
+0.1002E-2  ! mu   kg/m-s
+1481.0     ! a    m/s

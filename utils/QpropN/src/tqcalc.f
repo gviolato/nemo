@@ -232,6 +232,11 @@ C------set unstalled CD
         CD_C   = CD_CL*CL_C   + CD_RE*RE_C   + CD_MA*MA_C   
         CD_U0A = CD_CL*CL_U0A + CD_RE*RE_U0A + CD_MA*MA_U0A
         CD_U0T = CD_CL*CL_U0T + CD_RE*RE_U0T + CD_MA*MA_U0T
+
+C        write(*,*) I, RES_A(I)*180./(2*3.14159265), CL(I), CD(I)
+C        write( *, * ) 'Press Enter to continue' 
+C        read( *, * ) 
+        
 C
 c$$$        IF(STALL(I)) THEN
 c$$$C------- additional CD with normal-force stall model

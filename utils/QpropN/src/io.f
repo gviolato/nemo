@@ -109,15 +109,17 @@ C
 
 
 
-      SUBROUTINE READPOLNAMES(LU,LINE,ILINE,IERR,POLFILES,NPOLS)
+      SUBROUTINE READPOLNAMES(LU,LINE,ILINE,IERR,NPOLS,POLFILES)
       CHARACTER*(*) LINE
+      CHARACTER*80 POLFILES(*)
+      LOGICAL ERROR
 C----------------------------------------------------------------
 C     Parses character string INPUT into an array
 C     of strings POLFILES(1 NPOLS)
 C
-C     Each filename must be separated by string
+C     Each filename must be separated by space, tab or comma
 C
-C     NPOLS returns how many numbers were actually extracted.
+C     NPOLS returns how many filenames were actually extracted.
 C----------------------------------------------------------------
 C     
  10   CONTINUE
@@ -129,14 +131,15 @@ C
       IF(INDEX('#!',LINE(1:1)) .NE. 0) GO TO 10
       IF(LINE.EQ.' ') GO TO 10
 C
-C      
-C     Magic happens here
+      KB = INDEX(LINE,'!') - 1
+      IF(KB.LE.0) KB = LEN(LINE)
 C
-      
-      IERR = 0
-      RETURN
-C     
- 80   IERR = 1
+      CALL GETNAMES(LINE(1:KB), POLFILES, NPOLS, ERROR)
+      IF(ERROR) THEN
+       IERR = 1
+      ELSE
+       IERR = 0
+      ENDIF
       RETURN
 C     
  90   IERR = -1
@@ -239,7 +242,6 @@ ccc   WRITE(*,*) 'GETFLT: List-directed read error.'
       END ! GETFLT
 
 
-
       SUBROUTINE GETINT(INPUT,A,N,ERROR)
       CHARACTER*(*) INPUT
       INTEGER A(*)
@@ -312,6 +314,100 @@ ccc   WRITE(*,*) 'GETINT: String-to-integer conversion error.'
       RETURN
       END
 
+      
+      SUBROUTINE GETNAMES(INPUT,NAMES,NR,ERROR)
+      CHARACTER*(*) INPUT
+      CHARACTER*80 NAMES(*)
+      LOGICAL ERROR
+C----------------------------------------------------------------
+C     Parses character string INPUT into an array
+C     of real numbers returned in RNUM(1..NR).
+C
+C     Will attempt to extract no more than NR numbers,
+C     unless NR = 0, in which case all numbers present 
+C     in INPUT will be extracted.
+C
+C     NR returns how many numbers were actually extracted.
+C----------------------------------------------------------------
+      CHARACTER*1 TAB
+C
+      TAB = CHAR(9)
+C
+C---- number of characters to be examined
+      ILEN = LEN(INPUT)
+C
+C---- ignore everything after a "!" character
+      K = INDEX(INPUT,'!')
+      IF(K.GT.0) ILEN = K-1
+C
+C---- set limit on numbers to be read
+      NINP = NR
+      IF(NINP.EQ.0) NINP = ILEN/2 + 1
+C
+      NR = 0
+C
+      IF(ILEN.EQ.0) RETURN
+C
+C---- extract numbers
+      N = 0
+      K = 1
+      DO 10 IPASS=1, ILEN
+C------ find next blank or tab (pretend there's one after the end of the string)
+        KBLK = INDEX(INPUT(K:ILEN),' ') + K - 1
+        KTAB = INDEX(INPUT(K:ILEN),TAB) + K - 1
+C
+        IF(KBLK.EQ.K-1) KBLK = ILEN + 1
+        IF(KTAB.EQ.K-1) KTAB = ILEN + 1
+C
+        KSPACE = MIN( KBLK , KTAB )
+C
+        IF(KSPACE.EQ.K) THEN
+C------- just skip this space
+         K = K+1
+         GO TO 9
+        ENDIF
+C
+C------ also find next comma
+        KCOMMA = INDEX(INPUT(K:ILEN),',') + K - 1
+        IF(KCOMMA.EQ.K-1) KCOMMA = ILEN + 1
+C
+C------ space is farther down, so we ran into something...
+        N = N+1
+C
+C------ bug out early if no more numbers are to be read
+        IF(N.GT.NINP) GO TO 11
+C
+C------ set ending delimiter position for this number
+        KDELIM = MIN(KSPACE,KCOMMA)
+C
+        IF(K.EQ.KDELIM) THEN
+C------- nothing but a comma... just keep looking
+         K = K+1
+         GO TO 9
+        ENDIF
+C
+C------ whatever we have, it is in substring K:KEND
+        KEND = KDELIM - 1
+        NAMES(N) = INPUT(K:KEND)
+        NR = N
+C
+C------ keep looking after delimiter
+        K = KDELIM + 1
+C
+  9     IF(K.GE.ILEN) GO TO 11
+ 10   CONTINUE
+C
+C---- normal return
+ 11   CONTINUE
+      ERROR = .FALSE.
+      RETURN
+C
+C---- bzzzt !!!
+ 20   CONTINUE
+ccc   WRITE(*,*) 'GETNAMES: List-directed read error.'
+      ERROR = .TRUE.
+      RETURN
+      END ! GETNAMES
 
 
 
