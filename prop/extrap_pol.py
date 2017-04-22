@@ -54,13 +54,13 @@ class propfoil(ap.Airfoil):
 # Program execution
 if __name__=="__main__":
     RE = 1e5
-    foil = propfoil(['hs1712_Re5e4.pol'])
+    foil = propfoil(['be50_Re1e5.pol'])
     alpha = np.concatenate((np.arange(-180,-14,5),
                             np.arange(-14,20,1),
                             np.arange(20,181,5)))
     foil2 = foil.pol_ext.interpToCommonAlpha(alpha)
     pol2 = foil2.getPolar(RE)
-    with open('hs1712_ext_re5e4.pol','w') as polarfile:
+    with open('be50_ext_re1e5.pol','w') as polarfile:
         polarfile.write('# Reynolds Number\n{}\n'.format(RE))
         polarfile.write('# Polar data\n'
                         '# alpha, cl, cd\n')
