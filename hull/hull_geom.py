@@ -11,12 +11,16 @@
 
 import numpy as np
 from scipy import interpolate, integrate
+from scipy.optimize import fsolve
 
 # User defined variables
 
 NC  = 30;   # Number of points used to define cross sections
 
 # Functions
+
+def _wigRalpha_(alpha, b, c, r):
+    return 2*np.tan(alpha)*np.sqrt(1-r*np.sin(alpha)/b)+c/b
 
 def normal_pol(ksi, frac, deg=4):
     return frac*(np.power(ksi,deg)-1)
@@ -31,11 +35,21 @@ def wigley_keel(ksi, frac, f2=0.):
     X = 4.*x*(1.-x)
     return -1*frac*X**f2
 
-def wigley_cross(x, f1=1.):
-    return np.sqrt(1-x**(1./f1))
+def wigley_cross(x, b, c, f1=1.):
+    xf = x/b
+    return c*np.sqrt(1-xf**(1./f1))
 
-def oval(x,pwr,root):
-    return np.power(1-np.power(x,pwr),1./root)
+def wigley1_cross_R(x, b, c, rb=0.03):
+    r = b*rb
+    alpha = fsolve(_wigRalpha_, np.radians(45), args=(b,c,r))
+    return np.where(x<=r*np.sin(alpha),
+                    c*np.sqrt(1-r*np.sin(alpha)/b) \
+                    + r*np.cos(alpha) - np.sqrt(r**2 - x**2),
+                    c*np.sqrt(1-x/b))
+
+def oval(x,b,c,pwr,root):
+    xf = x/b
+    return c*np.power(1-np.power(xf,pwr),1./root)
 
 def normal_rectangle(ksi, frac):
     try:
@@ -63,9 +77,9 @@ def line_coord(s, l, nf):
 def cross_section(s, l, nf_c, nf_b, cross_fun, npnts=NC+1):
     b  = line_coord(s,l,nf_b)
     c  = line_coord(s,l,nf_c)
-    bN = np.linspace(0,1,npnts)
-    y  = c*cross_fun(bN)
-    return np.vstack((bN*b,y))
+    bN = b/2*(1+np.cos(np.linspace(-1,0,npnts)*np.pi))
+    y  = cross_fun(bN,b,c)
+    return np.vstack((bN,y))
 
 def getShapePoints(shape,part,nstt,npnts=NC+1):
     if part=='top':

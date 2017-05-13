@@ -8,8 +8,8 @@ NSTTS = 101
 TOL = 1E-3
 
 L      = 2.30;       # hull length (LOA) in m
-alt    = 0.05;       # Height of top
-pontal = 0.18;       # Draft
+alt    = 0.005;       # Height of top
+pontal = 0.23;       # Draft
 mboca  = 0.29/2      # Half-beam
 
 class BuoyShape():
@@ -17,9 +17,9 @@ class BuoyShape():
         self.length = length
         self.keel   = lambda x: geo.trapz(x,depth/length,perc=0.96)
         self.waterline   = lambda x: -geo.normal_pol(x,width/length,4)+0.01*np.sin(np.pi*x)
-        self.bottom   = lambda x: geo.wigley_cross(x)
-        self.cap    = lambda x: -1*geo.normal_pol(x,height/length,8)
-        self.top   = lambda x: geo.oval(x,6,2)
+        self.bottom   = lambda x,b,c: geo.wigley1_cross_R(x,b,c, rb=0.04)
+        self.cap   = lambda x: -geo.trapz(x,height/length,perc=0.995)
+        self.top   = lambda x,b,c: -geo.trapz(x,height,perc=0.995)
 
 if __name__=="__main__":
     shape = BuoyShape(L,pontal,mboca,alt)
@@ -40,10 +40,12 @@ if __name__=="__main__":
                                  shape.waterline,shape.bottom, 70)
         cs_t = geo.cross_section(station,
                                  shape.length,shape.cap,
-                                 shape.waterline,shape.top, 40)
+                                 shape.waterline,shape.top, 30)
         cs = np.hstack((cs_b,cs_t[:,-2::-1]))*1000
         cs = np.vstack((cs,station*1000*np.ones((1,cs.shape[1]))))
+        cs_mirror = np.vstack((-1*cs[0,-2:0:-1],cs[1,-2:0:-1],cs[2,-2:0:-1]))
+        cs = np.hstack((cs,cs_mirror))
         np.savetxt('./cross_sections/cs_{:02d}.sldcrv'.format(i),cs.T,
                    delimiter=' ',fmt='%.5f')#,header='HULL SECTION {}'.format(i))
 
-    #np.savetxt('./cross_sections/offsets.dat',np.array(STTS)*1000,fmt='%.3f')
+    np.savetxt('./cross_sections/offsets.dat',np.array(STTS)*1000,fmt='%.3f')

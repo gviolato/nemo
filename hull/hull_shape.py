@@ -66,7 +66,7 @@ class BuoyShape():
         self.keel   = lambda x: geo.normal_rectangle(x,depth/length)
         self.cap    = lambda x: -1*geo.normal_pol4(x,height/length)
         self.waterline   = lambda x: -1*geo.normal_pol4(x,width/length)+0.01*np.sin(np.pi*x)
-        self.bottom   = lambda x: geo.wigley_cross(x)
+        self.bottom   = lambda x, b, c: geo.wigley_cross(x,b,c)
         self.top   = lambda x: geo.oval(x,pwr,root)
         
 if __name__=="__main__":
