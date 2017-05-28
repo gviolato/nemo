@@ -38,12 +38,14 @@ if __name__=="__main__":
         cs_b = geo.cross_section(station,
                                  shape.length,shape.keel,
                                  shape.waterline,shape.bottom, 70)
-        cs_t = geo.cross_section(station,
-                                 shape.length,shape.cap,
-                                 shape.waterline,shape.top, 30)
-        cs = np.hstack((cs_b,cs_t[:,-2::-1]))*1000
+        #cs_t = geo.cross_section(station,
+        #                         shape.length,shape.cap,
+        #                         shape.waterline,shape.top, 30)
+        #cs = np.hstack((cs_b,cs_t[:,-2::-1]))*1000
+        cs = cs_b*1000
         cs = np.vstack((cs,station*1000*np.ones((1,cs.shape[1]))))
-        cs_mirror = np.vstack((-1*cs[0,-2:0:-1],cs[1,-2:0:-1],cs[2,-2:0:-1]))
+        cs = cs[:,::-1]
+        cs_mirror = np.vstack((-1*cs[0,-2::-1],cs[1,-2::-1],cs[2,-2::-1]))
         cs = np.hstack((cs,cs_mirror))
         np.savetxt('./cross_sections/cs_{:02d}.sldcrv'.format(i),cs.T,
                    delimiter=' ',fmt='%.5f')#,header='HULL SECTION {}'.format(i))
