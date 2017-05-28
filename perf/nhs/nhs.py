@@ -31,7 +31,7 @@ INC_HYDRO = True
 INC_PROP  = True
 INC_HULL  = True
 
-DEBUG_FLAG = False
+DEBUG_FLAG = True
 
 # Helper Classes
 class StateVec():
@@ -82,13 +82,6 @@ def _checkVar_(name,sim_defs):
         raise Exception("Variable name {} is neither a state "
                         "or control variable. Check your defin"
                         "ition file".format(v['xname']))
-
-def _get1VarFunc_(basefun,vartype,name):
-    return lambda x,u: basefun(getattr((x,u)[vartype],name))
-
-def _get2VarFunc_(basefun,vartypes,names):
-    return lambda x,u: basefun(getattr((x,u)[vartypes[0]],names[0]),
-                               getattr((x,u)[vartypes[1]],names[1]))
 
 def _getNVarFunc_(basefun,vartypes,names):
     return lambda x,u: basefun([getattr((x,u)[t],n)
@@ -169,16 +162,16 @@ def dragBuildUp(Cd_basic,Cl,X,dims):
 
 def surface_follower(X):
     """ Returns canard angular deflection based on vehicle height """
-    #return min(np.pi/180*(35*X.H+21.5), np.pi/180*6)
+    return min(np.pi/180*(35*X.H+21.5), np.pi/180*6)
 
 def controls(t, X, pilot):
     """ Returns input vector for current state of control variables """
-    if t<10:
-        dp = 3*np.pi/180
-    else:
-        dp = min(5*np.pi/180,(t-7)*np.pi/180)
-    #dp  = surface_follower(X)
-    pwr = min(t*30,pilot['pwr']) #+ 30.*np.sin(np.pi*t/10.) # min(1,t/pilot['t_pwr_ramp'])
+    #if t<10:
+    #    dp = 3*np.pi/180
+    #else:
+    #    dp = min(5*np.pi/180,(t-7)*np.pi/180)
+    dp  = np.pi/180*3. #surface_follower(X)
+    pwr =pilot['pwr'] #+ 30.*np.sin(np.pi*t/10.) # min(1,t/pilot['t_pwr_ramp'])
     return (dp, pwr)
 
 def nemo_hydro_actions(X,U,dims,AeroCoefs):
@@ -246,6 +239,9 @@ def nemo_dynamics(t, y, sim_defs,
         
     if INC_HULL and _inlimits_(X.H,-0.18,0.05):
         B_H, D_H, M_H = nemo_hull_actions(X, U, nemo, HullCoefGen)
+        if X.V < 0.11:
+            D_H = 0.
+        #D_H = np.sign(X.V)*20.if abs(X.V)>0.05 else 0.
     else:
         B_H, D_H, M_H = (0, 0, 0)
 
@@ -254,14 +250,19 @@ def nemo_dynamics(t, y, sim_defs,
         print L, D, M
         print T, M_T
         print B_H, D_H, M_H
+        print X.vec().T
+            
     
     gamma = X.theta - X.alpha
     
     Xdot.q = (M + M_T + M_H)/nemo['Iyy']
     Xdot.V = 1/Mass*(-D + T*np.cos(X.alpha) - D_H +
                      (B_H - Mass*GRAV)*np.sin(gamma))
-    Xdot.alpha = X.q - 1/(Mass*X.V)*(L + T*np.sin(X.alpha) +
-                                     (B_H - Mass*GRAV)*np.cos(gamma))
+    if X.V < 0.1:
+        Xdot.alpha = X.q
+    else:
+        Xdot.alpha = X.q - 1/(Mass*X.V)*(L + T*np.sin(X.alpha) +
+                                         (B_H - Mass*GRAV)*np.cos(gamma))
     Xdot.theta = X.q
     Xdot.X = X.V*np.cos(gamma)
     Xdot.H = -1*X.V*np.sin(gamma)
@@ -305,7 +306,10 @@ if __name__=="__main__":
     lbls = X.labels_vec()
     f, axarr = plt.subplots(3,2, sharex='col')
     MultFac = [1.,1.,180/np.pi,180/np.pi,1.,180/np.pi]
+    #print 'Max factor:{:.3f}'.format(
+    #    abs(min(np.diff(yout[:,5]*np.sin(yout[:,4]))/dt)/GRAV)+1.)
     for i,ax in enumerate(axarr.flat):
         ax.plot(yout[:,0],yout[:,i+1]*MultFac[i])
         ax.set_title(lbls[i])
     plt.show()
+    

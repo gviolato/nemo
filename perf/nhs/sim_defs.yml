@@ -1,8 +1,8 @@
 # Simulation definitions
 integration:
   t_start: 0.
-  t_end:   30.
-  t_step:  0.05
+  t_end:   2.
+  t_step:  0.005
 
 state:
   X: 0
@@ -14,7 +14,7 @@ state:
   Total: 6
 
 #            X , H,   theta, alfa, V,  q#
-init_state: [0., -0.02675, 0.000, 0.000, 2., 0.]
+init_state: [0., -0.02675, 0.000, 0.0, 1.0, 0.]
 
 control:
   dp:  0
@@ -22,7 +22,7 @@ control:
   Total: 2
 
 pilot:
-  pwr: 330.        # Rider's Power in Watts
+  pwr: 280.        # Rider's Power in Watts
   t_pwr_ramp: 1.
 
 nemo:
@@ -70,7 +70,7 @@ nemo:
   prop_h: 0.8          # Propeller vertical arm from CG
   propcoefs:
     eff: 0.87
-  hull_cg_xoff: 0.07   # Offset from CG to midhull (positive when CG is behind)
+  hull_cg_xoff: 0.072   # Offset from CG to midhull (positive when CG is behind)
   hullcoefs:
     dispV:
       namex1: 'theta'
